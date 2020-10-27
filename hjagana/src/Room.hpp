@@ -1,6 +1,7 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 
+#include "ObjectDisplayGrid.hpp"
 #include "Structure.hpp"
 #include "Creature.hpp"
 #include <string>
@@ -15,11 +16,14 @@ class Room: public Structure {
         void freeRoom();
         std::vector <Creature*> getCreature();
         void drawRoom(std::vector<Room*> r);
+        void draw();
+
     private:
         int roomCount = 0;
         std::vector <Room *> roomVector;
-        std::vector <Creature*> creatureVector;
-        void draw();
+        // std::vector <Creature*> creatureVector;
+        // std::vector <Item*> itemVector; 
+        Room* room;
 };
 
 #endif

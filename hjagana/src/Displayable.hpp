@@ -5,11 +5,13 @@
 #include <algorithm>
 #include <string>
 #include <vector>
+#include "GridChar.h"
 
-class Displayable: public ObjectDisplayGrid {
+// class ObjectDisplayGrid;
+class Displayable {
     public:
         Displayable();
-        void draw();
+        //void draw();
         void setInvisible();
         void setVisible();
         void setMaxhit(int maxHit);
@@ -27,6 +29,7 @@ class Displayable: public ObjectDisplayGrid {
         int getPosY();
         int getHeight();
         int getWidth();
+        GridChar*** objectGrid;
     private:
         std::vector<Displayable *> displayableVector;
         int displayCount = 0;

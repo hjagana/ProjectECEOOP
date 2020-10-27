@@ -3,6 +3,7 @@
 
 #include "Displayable.hpp"
 #include "CreatureAction.hpp"
+#include "ObjectDisplayGrid.hpp"
 
 class CreatureAction;
 class Creature: public Displayable {
@@ -12,6 +13,7 @@ class Creature: public Displayable {
         void setHpMoves(int hpm);
         void setDeathAction(CreatureAction da);
         void setHitAction(CreatureAction ha);
+        void draw();
     private:
 };
 

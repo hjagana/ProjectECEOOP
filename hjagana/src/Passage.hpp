@@ -4,6 +4,7 @@
 #include "Structure.hpp"
 #include <string>
 #include <vector>
+#include "ObjectDisplayGrid.hpp"
 
 class Passage: public Structure {
     public:
@@ -12,6 +13,7 @@ class Passage: public Structure {
         void setID(int room1, int room2);
         void addPassage(Passage *passage);
         void freePassage();
+        void draw();
     private:
         int passageCount = 0;
         std::vector <Passage *> passageVector;

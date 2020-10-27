@@ -2,14 +2,14 @@
 #include <iostream>
 
 Passage::Passage() {
-    std::cout << "Passage::Passage()" << std::endl; 
+    // std::cout << "Passage::Passage()" << std::endl; 
 }
 
 void Passage::setName(std::string n) {
-    std::cout << "Passage::setName(std::string n)" << std::endl;
+    // std::cout << "Passage::setName(std::string n)" << std::endl;
 }
 void Passage::setID(int room1, int room2) {
-    std::cout << "Passage::setID(int room1, int room2)" << std::endl;
+    // std::cout << "Passage::setID(int room1, int room2)" << std::endl;
 }
 
 void Passage::addPassage (Passage *  passage) {
@@ -22,4 +22,12 @@ void Passage::freePassage(){
         delete *passage; 
     }
     passageVector.clear();
+}
+
+void Passage::draw() {
+    int xPos = this -> getPosX();
+    int yPos = this -> getPosY();
+    char c = 'P';
+    ObjectDisplayGrid::addObjectToDisplay(new GridChar(c), xPos, yPos);
+    ObjectDisplayGrid::update();
 }

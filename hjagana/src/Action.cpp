@@ -3,13 +3,13 @@
 #include <iostream>
 
 void Action::setMessage(std::string msg) {
-    std::cout << "Action::setMessage(std::string msg)" << std::endl;
+    //std::cout << "Action::setMessage(std::string msg)" << std::endl;
 }
 void Action::setIntValue(int v) {
-    std::cout << "Action::setIntValue(int v)" << std::endl;
+    //std::cout << "Action::setIntValue(int v)" << std::endl;
 }
 void Action::setCharValue(char c) {
-    std::cout << "Action::setCharValue(char c)" << std::endl;
+    // std::cout << "Action::setCharValue(char c)" << std::endl;
 }
 
 void Action::addAction (Action *  action) {

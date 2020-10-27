@@ -11,7 +11,7 @@ SRCS = *.cpp
 run :
 	$(CC) && ./GameXML
 
-cleanmake : clean Project
+# cleanmake : clean Project
 
 .PHONY : $(EXECUTABLE)
 $(EXECUTABLE) :  $(OBJS)

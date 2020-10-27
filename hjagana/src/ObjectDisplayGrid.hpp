@@ -1,9 +1,16 @@
 #ifndef OBJECTDISPLAYGRID_H_
 #define OBJECTDISPLAYGRID_H_
 #include "GridChar.h"
+// #include "Dungeon.hpp"
+// #include "Displayable.hpp"
+#include "Structure.hpp"
+#include "Creature.hpp"
+// #include "Room.hpp"
+// #include "Passage.hpp"
 #include <iostream>
 #include "curses.h"
 
+static GridChar*** objectGrid;
 class ObjectDisplayGrid {
     public:
         int getObjectDisplayGrid(int gameHeight, int width, int topHeight);
@@ -23,16 +30,16 @@ class ObjectDisplayGrid {
         /**
          * Refreshes the grid display
          */
-        virtual void update();
-
+        // virtual void update();
+        static void update();
         /**
          * Adds an object to the display grid
          * @param ch  Object to display
          * @param x   X position
          * @param y   Y position
          */
-        virtual void addObjectToDisplay(GridChar* ch, int x, int y);
-
+        // virtual void addObjectToDisplay(GridChar* ch, int x, int y);
+        static void addObjectToDisplay(GridChar* ch, int x, int y);
         /**
          * Writes a line of text to the screen at the given line relative to the bottom
          * @param line    line number
@@ -40,14 +47,22 @@ class ObjectDisplayGrid {
          * @param update  If true, immediately updates the screen
          */
         virtual void writeLine(int line, std::string message);
+        // void runDisplay(ObjectDisplayGrid* g, Dungeon* d);
         
+        
+
     private:
-        GridChar*** objectGrid;
+        //std::vector<Displayable*>[height][width] objectGrid;
+        // std::vector<Displayable*>[h][w] objectGrid;
+        //std::vector<Displayable*> displayableVector;
         /** Keeps track of the consoles width and height */
         int height, width;
+        // int h*;
+        // int w*;
 
         /** Number of lines for message writing */
         int messages;
+        
 };
 
 #endif

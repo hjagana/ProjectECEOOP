@@ -4,7 +4,7 @@
 Dungeon* Dungeon::dungeonR = NULL;
 
 Dungeon* Dungeon::getDungeon(std::string name, int width, int gameHeight) {
-    std::cout << "Dungeon::getDungeon(std::string name, int width, int gameHeight)" << std::endl;
+    // std::cout << "Dungeon::getDungeon(std::string name, int width, int gameHeight)" << std::endl;
     if (dungeonR == NULL) {
         dungeonR = new Dungeon();
     }
@@ -12,19 +12,19 @@ Dungeon* Dungeon::getDungeon(std::string name, int width, int gameHeight) {
 }
 void Dungeon::addRoom(Room* r) {
     rooms.push_back(r);
-    std::cout << "Dungeon::addRoom(Room)" << std::endl;
+    // std::cout << "Dungeon::addRoom(Room)" << std::endl;
 }
 void Dungeon::addCreature(Creature* c){
     creatures.push_back(c);
-    std::cout << "Dungeon::addCreature(Creature)" << std::endl;
+    // std::cout << "Dungeon::addCreature(Creature)" << std::endl;
 }
 void Dungeon::addPassage(Passage* p) {
     passages.push_back(p);
-    std::cout << "Dungeon::addPassage(Passage passage)" << std::endl;
+    // std::cout << "Dungeon::addPassage(Passage passage)" << std::endl;
 }
 void Dungeon::addItem(Item* i){
     items.push_back(i);
-    std::cout << "Dungeon::addItem(Item)" << std::endl;
+    // std::cout << "Dungeon::addItem(Item)" << std::endl;
 }
 std::vector<Room*> Dungeon::getRooms() {
     return rooms;
@@ -37,6 +37,25 @@ std::vector<Passage*> Dungeon::getPassages() {
 }
 std::vector<Item*> Dungeon::getItems() {
     return items;
+}
+
+void Dungeon::draw(Dungeon *d) {
+    std::vector<Room*> roomsVec = d -> getRooms();
+    std::vector<Creature*> creaturesVec = d -> getCreatures();
+    std::vector<Passage*> passagesVec = d -> getPassages();
+    std::vector<Item*> itemsVec = d -> getItems();
+    for (Room* r: roomsVec) {
+        r -> draw();
+    }
+    for (Creature* c: creaturesVec){
+        c -> draw();
+    }
+    for (Passage* p: passagesVec) {
+        p -> draw();
+    }
+    for (Item* i: itemsVec) {
+        i -> draw();
+    }
 }
 
 // void Dungeon::drawRoom(std::vector<Room*> r) {

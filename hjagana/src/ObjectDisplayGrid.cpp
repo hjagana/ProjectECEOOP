@@ -1,6 +1,11 @@
 #include "ObjectDisplayGrid.hpp"
 #include <iostream>
+#include <string>
+#include <atomic> 
+#include <thread>
+#include <sstream>
 
+// std::atomic_bool isRunning(true);
 
 int ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight) {
     std::cout << "ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight)" << std::endl;
@@ -64,9 +69,9 @@ ObjectDisplayGrid::~ObjectDisplayGrid() {
 void ObjectDisplayGrid::addObjectToDisplay(GridChar* ch, int x, int y) {
 	// note grid objects start from 0,0 and go until width,height
 	// x between 0 and width
-	if ((0 <= x) && (x < width)) {
+	if ((0 <= x) && (x < 150)) { // 150 should be "width"
 		// y between 0 and height
-		if ((0 <= y) && (y < height)) {
+		if ((0 <= y) && (y < 41)) { // 41 should be "height"
 			// delete existing character if present
 			if (objectGrid[x][y] != NULL) {
 				delete objectGrid[x][y];
@@ -91,3 +96,36 @@ void ObjectDisplayGrid::writeLine(int line, std::string message) {
 	// clear after what we wrote to EOL
 	clrtoeol();
 }
+
+// void ObjectDisplayGrid::runDisplay(ObjectDisplayGrid* grid, Dungeon* d) {
+//     std::vector<Room*> rVector = d->getRooms();
+
+//     for (Room* x: rVector) {
+
+//         // int w = x -> getWidth();
+//         // int h = x -> getHeight();
+//         // int xPos = x -> getPosX();
+//         // int yPos = x -> getPosY();
+//         // // std::vector<Creature*> cVector = x->getCreature(); // uses Room to get creature Vector
+//         // // std::vector<Creature*> cVector = d->getCreatures(); // uses Creature to get crature Vector
+//         // for (int i = 0; i < w; i++) {
+//         //     for (int j = 0; j < h; j++) {
+//         //         char c;
+//         //         if (i == 0 || i == (w-1) || j == 0 || j == (h-1)) {
+//         //             c = 'X';
+//         //         }
+//         //         else {
+//         //             c = ' ';
+//         //         }
+//                 grid->addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
+//         //     }
+//         // }
+//         // // update the grid
+//         // grid->update();
+//         // // wait a bit to rejoin
+//         // // wait in a few steps to update faster on keypress
+//         // for (int i = 0; (isRunning && i < 5); i++) {
+//         //     std::this_thread::sleep_for(std::chrono::milliseconds(400));
+//         // }
+//     }
+// }

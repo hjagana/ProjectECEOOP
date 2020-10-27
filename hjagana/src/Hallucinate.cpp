@@ -3,5 +3,5 @@
 
 Hallucinate::Hallucinate(Creature* _owner):ItemAction(_owner) {
     // Creature* owner = _owner;
-    std::cout << "Hallucinate::Hallucinate(Creature _owner):ItemAction(_owner)" << std::endl;
+    // std::cout << "Hallucinate::Hallucinate(Creature _owner):ItemAction(_owner)" << std::endl;
 }

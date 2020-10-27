@@ -7,7 +7,7 @@
 #include "Creature.hpp"
 #include "Item.hpp"
 #include "Passage.hpp"
-
+#include "ObjectDisplayGrid.hpp"
 
 class Dungeon {
     public:
@@ -16,6 +16,7 @@ class Dungeon {
         std::vector<Creature*> getCreatures();
         std::vector<Passage*> getPassages();
         std::vector<Item*> getItems();
+        void draw(Dungeon* d);
         void addRoom(Room* r);
         void addCreature(Creature* c);
         void addPassage(Passage* p);

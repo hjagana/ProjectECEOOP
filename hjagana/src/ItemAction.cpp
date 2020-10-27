@@ -3,5 +3,5 @@
 
 ItemAction::ItemAction(Creature* _owner) {
     // Creature* owner = _owner;
-    std::cout << "ItemAction::ItemAction(Creature _owner)" << std::endl;
+    // std::cout << "ItemAction::ItemAction(Creature _owner)" << std::endl;
 }

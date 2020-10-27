@@ -25,35 +25,42 @@ int HEIGHT = 41;
 int MESSAGES = 5;
 
 void runDisplay(ObjectDisplayGrid* grid, Dungeon* d) {
-    std::vector<Room*> rVector = d->getRooms();
-    for (auto x: rVector) {
-        int w = x -> getWidth();
-        int h = x -> getHeight();
-        int xPos = x -> getPosX();
-        int yPos = x -> getPosY();
-        // std::vector<Creature*> cVector = x->getCreature(); // uses Room to get creature Vector
-        // std::vector<Creature*> cVector = d->getCreatures(); // uses Creature to get crature Vector
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                char c;
-                if (i == 0 || i == (w-1) || j == 0 || j == (h-1)) {
-                    c = 'X';
-                }
-                else {
-                    c = ' ';
-                }
-                grid->addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
-            }
-        }
-        // update the grid
-        grid->update();
-        // wait a bit to rejoin
-        // wait in a few steps to update faster on keypress
-        for (int i = 0; (isRunning && i < 5); i++) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(400));
-        }
-    }
+    d -> draw(d);
 }
+
+// void runDisplay(ObjectDisplayGrid* grid, Dungeon* d) {
+//     std::vector<Room*> rVector = d->getRooms();
+//     std::vector<Creature*> cVector = d->getCreatures();
+//     std::vector<Item*> iVector = d->getItems();
+//     std::vector<Passage*> pVector = d->getPassages();
+//     for (auto x: rVector) {
+//         int w = x -> getWidth();
+//         int h = x -> getHeight();
+//         int xPos = x -> getPosX();
+//         int yPos = x -> getPosY();
+//         // std::vector<Creature*> cVector = x->getCreature(); // uses Room to get creature Vector
+//         // std::vector<Creature*> cVector = d->getCreatures(); // uses Creature to get crature Vector
+//         for (int i = 0; i < w; i++) {
+//             for (int j = 0; j < h; j++) {
+//                 char c;
+//                 if (i == 0 || i == (w-1) || j == 0 || j == (h-1)) {
+//                     c = 'X';
+//                 }
+//                 else {
+//                     c = ' ';
+//                 }
+//                 grid->addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
+//             }
+//         }
+//         // update the grid
+//         grid->update();
+//         // wait a bit to rejoin
+//         // wait in a few steps to update faster on keypress
+//         for (int i = 0; (isRunning && i < 5); i++) {
+//             std::this_thread::sleep_for(std::chrono::milliseconds(400));
+//         }
+//     }
+// }
 
 int main(int argc, char* argv[]) {
 
@@ -132,6 +139,8 @@ int main(int argc, char* argv[]) {
     // create an initialize the object display grid
     ObjectDisplayGrid grid(WIDTH, HEIGHT, MESSAGES);
     ObjectDisplayGrid* pGrid = &grid;
+    // Displayable grid(WIDTH, HEIGHT, MESSAGES);
+    // Displayable* pGrid= &grid;
 
     // thread to wait for key press
     KeyboardListener listener(pGrid);
@@ -140,7 +149,7 @@ int main(int argc, char* argv[]) {
     // thread to update display
     // std::thread displayThread(runDisplay, pGrid);
     std::thread displayThread(runDisplay, pGrid, gameDungeon);
-
+    // pGrid -> runDisplay(pGrid, gameDungeon);
     // wait for the keyboard thread to finish, then notify the display to stop
     keyboardThread.join();
     isRunning = false;
