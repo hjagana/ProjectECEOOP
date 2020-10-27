@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-class Displayable {
+class Displayable: public ObjectDisplayGrid {
     public:
         Displayable();
         void draw();
@@ -35,5 +35,4 @@ class Displayable {
         int w; // width
         int h; // height
 };
-
 #endif
