@@ -1,7 +1,7 @@
 #ifndef OBJECTDISPLAYGRID_H_
 #define OBJECTDISPLAYGRID_H_
 #include "GridChar.h"
-// #include "Dungeon.hpp"
+//#include "Dungeon.hpp"
 // #include "Displayable.hpp"
 #include "Structure.hpp"
 #include "Creature.hpp"
@@ -11,6 +11,8 @@
 #include "curses.h"
 
 static GridChar*** objectGrid;
+// static std::vector<Displayable>** objGridStack;
+
 class ObjectDisplayGrid {
     public:
         int getObjectDisplayGrid(int gameHeight, int width, int topHeight);
@@ -22,16 +24,20 @@ class ObjectDisplayGrid {
          * @param height    Grid height
          * @param messages  Number of lines to reserve in the message area
          */
+        std::vector<GridChar>** objGridStack;
+        static ObjectDisplayGrid* objGrid;
         ObjectDisplayGrid(int width, int height, int messages);
-
+        static ObjectDisplayGrid* getGrid(int w, int h, int m);
+        static ObjectDisplayGrid* getGrid();
         /** Object deconstructor, to delete the grid character matrix and free ncurses data */
         virtual ~ObjectDisplayGrid();
+        void removeFromVector(int x, int y) ;
 
         /**
          * Refreshes the grid display
          */
         // virtual void update();
-        static void update();
+        virtual void update();
         /**
          * Adds an object to the display grid
          * @param ch  Object to display
@@ -39,7 +45,7 @@ class ObjectDisplayGrid {
          * @param y   Y position
          */
         // virtual void addObjectToDisplay(GridChar* ch, int x, int y);
-        static void addObjectToDisplay(GridChar* ch, int x, int y);
+        virtual void addObjectToDisplay(GridChar* ch, int x, int y);
         /**
          * Writes a line of text to the screen at the given line relative to the bottom
          * @param line    line number

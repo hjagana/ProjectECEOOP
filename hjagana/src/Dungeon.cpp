@@ -26,6 +26,34 @@ void Dungeon::addItem(Item* i){
     items.push_back(i);
     // std::cout << "Dungeon::addItem(Item)" << std::endl;
 }
+void Dungeon::addPlayer(Player* pR) {
+    p = pR;
+}
+void Dungeon::addMonster(Monster *m) {
+    monsters.push_back(m);
+}
+void Dungeon::addArmor(Armor *a) {
+    armors.push_back(a);
+}
+void Dungeon::addSword(Sword *s) {
+    swords.push_back(s);
+}
+void Dungeon::addScroll(Scroll *s) {
+    scrolls.push_back(s);
+}
+void Dungeon::setWidth(int w) {
+    width = w;
+}
+void Dungeon::setGameHeight(int gH){
+    gameHeight  = gH;
+}
+void Dungeon::setTopHeight(int tH){
+    topHeight = tH;
+}
+void Dungeon:: setBottomHeight(int bH) {
+    bottomHeight = bH;
+}
+
 std::vector<Room*> Dungeon::getRooms() {
     return rooms;
 }
@@ -38,23 +66,70 @@ std::vector<Passage*> Dungeon::getPassages() {
 std::vector<Item*> Dungeon::getItems() {
     return items;
 }
+Player* Dungeon::getPlayer() {
+    return p;
+}
+std::vector<Monster*> Dungeon::getMonsters() {
+    return monsters;
+}
+
+std::vector<Armor*> Dungeon::getArmors() {
+    return armors;
+}
+std::vector<Scroll*> Dungeon::getScrolls() {
+    return scrolls;
+}
+std::vector<Sword*> Dungeon::getSwords() {
+    return swords;
+}
+int Dungeon::getWidth() {
+    return width;
+}
+int Dungeon::getGameHeight() {
+    return gameHeight;
+}
+int Dungeon::getTopHeight(){
+    return topHeight;
+}
+int Dungeon::getBottomHeight(){
+    return bottomHeight;
+}
 
 void Dungeon::draw(Dungeon *d) {
     std::vector<Room*> roomsVec = d -> getRooms();
     std::vector<Creature*> creaturesVec = d -> getCreatures();
+    std::vector<Monster*> monstersVec = d -> getMonsters();
     std::vector<Passage*> passagesVec = d -> getPassages();
-    std::vector<Item*> itemsVec = d -> getItems();
+    // std::vector<Item*> itemsVec = d -> getItems();
+    std::vector<Armor*> armorsVec = d -> getArmors();
+    std::vector<Scroll*> scrollsVec = d -> getScrolls();
+    std::vector<Sword*> swordsVec = d -> getSwords();
+
     for (Room* r: roomsVec) {
         r -> draw();
-    }
-    for (Creature* c: creaturesVec){
-        c -> draw();
     }
     for (Passage* p: passagesVec) {
         p -> draw();
     }
-    for (Item* i: itemsVec) {
-        i -> draw();
+    Player *playuh = d -> getPlayer();
+    playuh -> draw();
+    for (Creature* c: creaturesVec){
+        c -> draw();
+    }
+    for (Monster*m : monstersVec) {
+        m -> draw();
+    }
+    // for (Item* i: itemsVec) {
+    //     i -> draw();
+    // }
+    for (Armor* a: armorsVec) {
+        a -> draw();
+    }
+    for (Scroll* s: scrollsVec) {
+        s -> draw();
+    }
+    for (Sword* s: swordsVec) {
+        s -> draw();
     }
 }
 

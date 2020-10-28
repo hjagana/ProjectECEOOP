@@ -6,6 +6,19 @@
 #include <sstream>
 
 // std::atomic_bool isRunning(true);
+ObjectDisplayGrid* ObjectDisplayGrid::objGrid = NULL;
+ObjectDisplayGrid* ObjectDisplayGrid::getGrid(int _width, int _height, int _messages) {
+	if (objGrid == NULL) {
+		objGrid = new ObjectDisplayGrid(_width, _height, _messages);
+	}
+	return objGrid;
+}
+ObjectDisplayGrid* ObjectDisplayGrid::getGrid() {
+	// if (objGrid == NULL) {
+		// return some error message!
+	// }
+	return objGrid;
+}
 
 int ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight) {
     std::cout << "ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight)" << std::endl;
@@ -19,7 +32,9 @@ ObjectDisplayGrid::ObjectDisplayGrid(int _width, int _height, int _messages) : w
 	// create the 2D array of grid characters
 	// note if you want to write messages instead, ncurses
 	objectGrid = new GridChar**[width];
+	// objGridStack = new std::vector<GridChar>*[width];
 	for (int i = 0; i < width; i++) {
+		// objGridStack[i] = new std::vector<GridChar>[height];
 		objectGrid[i] = new GridChar*[height];
 		for (int j = 0; j < height; j++) {
 			objectGrid[i][j] = NULL;
@@ -48,6 +63,18 @@ ObjectDisplayGrid::ObjectDisplayGrid(int _width, int _height, int _messages) : w
 	clear();
 }
 
+void ObjectDisplayGrid::removeFromVector(int x, int y) {
+	objGridStack[x][y].pop_back();
+	if (objGridStack[x][y].empty()){
+		GridChar ch = objGridStack[x][y].back();
+		mvaddch(y, x, ch.getChar());
+	} else {
+		// GridChar ch = ' ';
+		mvaddch(y, x, ' ');
+	}
+
+}
+
 ObjectDisplayGrid::~ObjectDisplayGrid() {
 	// free memory from the dynamically sized object grid
 	for (int i = 0; i < width; i++) {
@@ -57,10 +84,13 @@ ObjectDisplayGrid::~ObjectDisplayGrid() {
 		}
 		// delete the column
 		delete[] objectGrid[i];
+		// delete[] objGridStack[i];
 	}
 	// delete the array of columns
 	delete[] objectGrid;
+	// delete[] objGridStack;
 	objectGrid = NULL;
+	// objGridStack = NULL;
 
 	// free ncurses data
 	endwin();
@@ -69,16 +99,19 @@ ObjectDisplayGrid::~ObjectDisplayGrid() {
 void ObjectDisplayGrid::addObjectToDisplay(GridChar* ch, int x, int y) {
 	// note grid objects start from 0,0 and go until width,height
 	// x between 0 and width
-	if ((0 <= x) && (x < 150)) { // 150 should be "width"
+	if ((0 <= x) && (x < width)) { // 150 should be "width"
 		// y between 0 and height
-		if ((0 <= y) && (y < 41)) { // 41 should be "height"
+		if ((0 <= y) && (y < height)) { // 41 should be "height"
 			// delete existing character if present
 			if (objectGrid[x][y] != NULL) {
+				// objGridStack[x][y].push_back(*ch);
 				delete objectGrid[x][y];
+				// pop from stack
 			}
-
 			// add new character to the internal character list
 			objectGrid[x][y] = ch;
+			// objGridStack[x][y].push_back(*ch);
+			// else push to stack
 			// draws the character on the screen, note it is relative to 0,0 of the terminal
 			mvaddch(y, x, ch->getChar());
 		}

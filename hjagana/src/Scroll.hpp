@@ -8,6 +8,7 @@ class Scroll: public Item {
     public:
         Scroll(std::string name);
         void setID(int room, int serial);
+        virtual void draw();
     private:
 };
 

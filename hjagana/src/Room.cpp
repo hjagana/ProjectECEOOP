@@ -29,6 +29,7 @@ void Room::freeRoom(){
 }
 
 void Room::draw() {
+    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
     int w = this -> getWidth();
     int h = this -> getHeight();
     int xPos = this -> getPosX();
@@ -36,15 +37,15 @@ void Room::draw() {
     for (int i = 0; i < w; i++) {
         for (int j = 0; j < h; j++) {
             char c;
-            if (i == 0 || i == (w-1) || j == 0 || j == (h-1)) {
+            if (i == 0 || i == (w - 1) || j == 0 || j == (h - 1)) {
                 c = 'X';
             }
             else {
-                c = ' ';
+                c = '.';
             }
-            ObjectDisplayGrid::addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
+            grid -> addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
         }
     }
-    ObjectDisplayGrid::update();
+    grid -> update();
 }
 

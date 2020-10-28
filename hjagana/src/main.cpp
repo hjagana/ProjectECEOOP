@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
         xercesc::XMLString::release(&message);
         return 1;
     }
-    fileName = "../xmlfiles/dungeon.xml";
+    fileName = "../xmlfiles/testDrawing.xml";
     // switch (argc) {
     //     case 2:
     //         fileName = "./xmlfiles/" + ((std::string) argv[1]);
@@ -137,8 +137,10 @@ int main(int argc, char* argv[]) {
     
 
     // create an initialize the object display grid
-    ObjectDisplayGrid grid(WIDTH, HEIGHT, MESSAGES);
-    ObjectDisplayGrid* pGrid = &grid;
+    // ObjectDisplayGrid grid(gameDungeon->getWidth(), gameDungeon->getGameHeight(), MESSAGES);
+    ObjectDisplayGrid* pGrid = ObjectDisplayGrid::getGrid(gameDungeon->getWidth(), gameDungeon->getGameHeight(), MESSAGES);
+    // ObjectDisplayGrid grid(WIDTH, HEIGHT, MESSAGES);
+    // ObjectDisplayGrid* pGrid = grid;
     // Displayable grid(WIDTH, HEIGHT, MESSAGES);
     // Displayable* pGrid= &grid;
 
@@ -156,6 +158,7 @@ int main(int argc, char* argv[]) {
 
     // wait for the display thread to finish
     displayThread.join();
+    delete(pGrid);
 
     return 0;
 }

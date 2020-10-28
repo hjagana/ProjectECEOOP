@@ -9,6 +9,9 @@ class Armor: public Item {
         Armor(std::string name);
         void setName(std::string n);
         void setID(int room, int serial);
+        std::string getName();
+        std::string armorName;
+        virtual void draw();
     private:
 };
 

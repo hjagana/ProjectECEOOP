@@ -24,10 +24,69 @@ void Passage::freePassage(){
     passageVector.clear();
 }
 
+void Passage::setPosX(int _x) {
+    xVec.push_back(_x);
+}
+void Passage::setPosY(int _y) {
+    yVec.push_back(_y);
+}
+
 void Passage::draw() {
-    int xPos = this -> getPosX();
-    int yPos = this -> getPosY();
-    char c = 'P';
-    ObjectDisplayGrid::addObjectToDisplay(new GridChar(c), xPos, yPos);
-    ObjectDisplayGrid::update();
+    char c;
+    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
+    grid -> writeLine(1, std::to_string(xVec.size()));
+    grid -> writeLine(2, std::to_string(yVec.size()));
+
+    for (int i = 1; i < xVec.size(); i++) {
+        int x1 = xVec[i - 1];
+        int y1 = yVec[i - 1];
+        int x2 = xVec[i];
+        int y2 = yVec[i];
+
+        int check1 = x1-x2;
+        int check2 = y1-y2;
+        // int check3 = x2-x1;
+        // int check4 = y2-y1;
+        // int check3 = 0; // <-- this variable should check if we are at a new room
+
+        if (x1 != x2) {
+            int xSmall = 0;
+            int xBig = 0;
+            if (x1 < x2) {
+                xSmall = x1;
+                xBig = x2;
+            } else {
+                xBig = x1;
+                xSmall = x2;
+            }
+            for (int b = xSmall; b <= xBig; b++) {
+                c = '#';
+                grid -> addObjectToDisplay(new GridChar(c), b, y1);
+            }
+        } else if (y1 != y2) {
+            int ySmall = 0;
+            int yBig = 0;
+            if (y1 < y2) {
+                ySmall = y1;
+                yBig = y2;
+            } else {
+                yBig = y1;
+                ySmall = y2;
+            }
+            for (int b = ySmall; b <= yBig; b++) {
+                c = '#';
+                grid -> addObjectToDisplay(new GridChar(c), x1, b);
+            }
+        }
+        grid -> update();
+    }
+    c = '+';
+    int c1 = xVec[0];
+    int c2 = yVec[0];
+    grid -> addObjectToDisplay(new GridChar(c), c1, c2);
+    // int c3 = xVec.back();
+    int c3 = xVec[xVec.size()-1];
+    int c4 = yVec[yVec.size()-1];
+    grid -> addObjectToDisplay(new GridChar(c), c3, c4);
+    grid -> update();
 }

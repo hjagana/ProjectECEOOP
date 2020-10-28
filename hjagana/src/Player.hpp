@@ -9,6 +9,7 @@ class Player: public Creature {
     public:
         void setWeapon(Item sword);
         void setArmor(Item armor);
+        void draw();
     private:
 };
 

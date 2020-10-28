@@ -63,15 +63,19 @@ void GameXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, cons
         int width = std::stoi(widthDungeon);
 
         std::string topHeightDungeon = xmlChToString(getXMLChAttributeFromString(attributes, "topHeight"));
-        topHeightDungeon = std::stoi(topHeightDungeon);
+        int tHDungeon = std::stoi(topHeightDungeon);
         std::string gameHeightDungeon = xmlChToString(getXMLChAttributeFromString(attributes, "gameHeight"));
-        int gameheight = std::stoi(gameHeightDungeon);
+        int gHeightDungeon = std::stoi(gameHeightDungeon);
         std::string bottomHeightDungeon = xmlChToString(getXMLChAttributeFromString(attributes, "bottomHeight"));
-        bottomHeightDungeon = std::stoi(bottomHeightDungeon);
+        int bHeightDungeon = std::stoi(bottomHeightDungeon);
         
         // dungeon = new Dungeon();
-        dungeon = Dungeon::getDungeon(nameDungeon, width, gameheight);
-        
+        dungeon = Dungeon::getDungeon(nameDungeon, width, gHeightDungeon);
+        dungeon -> setWidth(width);
+        dungeon -> setGameHeight(gHeightDungeon);
+        dungeon -> setTopHeight(tHDungeon);
+        dungeon -> setBottomHeight(bHeightDungeon);
+
         // displayableVector.push_back(dungeon); // push dungeon to stack
     } else if (case_insensitive_match(qNameStr, "Rooms")) { 
         // room vector?
@@ -105,6 +109,7 @@ void GameXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, cons
         int sSerial = std::stoi(scrollSerial);
         Scroll * s = new Scroll(scrollName);
         s -> setID(sRoom, sSerial);
+        dungeon -> addScroll(s);
         displayableVector.push_back(s); // push scroll to stack
 
     } else if (case_insensitive_match(qNameStr, "ItemAction")) {
@@ -132,7 +137,10 @@ void GameXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, cons
         // Item* iS = new Item();
         // Item* iA = new Item ();
         
+
         Player *p = new Player();
+        //dungeon -> addCreature(p);
+        dungeon -> addPlayer(p);
         // p -> setName(playerName);
         // p -> setID(playerRoom, playerSerial);
         displayableVector.push_back(p); // push player into stack
@@ -167,6 +175,7 @@ void GameXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, cons
         int sSword = std::stoi(serialSword);
         Sword *s = new Sword(nameSword);
         s -> setID(rSword, sSword);
+        dungeon -> addSword(s);
         displayableVector.push_back(s); // push sword into stack
 
     } else if (case_insensitive_match(qNameStr, "ItemIntValue")) {
@@ -181,6 +190,8 @@ void GameXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, cons
         Monster *m = new Monster();
         m -> setName(monsterName);
         m -> setID(mRoom, mSerial);
+        //dungeon -> addCreature(m);
+        dungeon -> addMonster(m);
         displayableVector.push_back(m); // push monster into stack
 
     } else if (case_insensitive_match(qNameStr, "type")) {
@@ -195,6 +206,8 @@ void GameXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, cons
         Armor *a = new Armor(armorName);
         a -> setName(armorName);
         a -> setID(aRoom, aSerial);
+        // a -> setOwner();
+        dungeon -> addArmor(a);
         displayableVector.push_back(a); // push armor into stack
 
     } else if (case_insensitive_match(qNameStr, "Passages")) {
@@ -206,6 +219,7 @@ void GameXMLHandler::startElement(const XMLCh* uri, const XMLCh* localName, cons
         int pR2 = std::stoi(passageR2);
         Passage *p = new Passage();
         p -> setID(pR1, pR2);
+        dungeon -> addPassage(p);
         displayableVector.push_back(p); // push passage into stack
 
     } else {

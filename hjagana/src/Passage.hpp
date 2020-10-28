@@ -12,8 +12,12 @@ class Passage: public Structure {
         void setName(std::string n);
         void setID(int room1, int room2);
         void addPassage(Passage *passage);
+        virtual void setPosX(int _x);
+        virtual void setPosY(int _y);
         void freePassage();
-        void draw();
+        virtual void draw();
+        std::vector<int> xVec;
+        std::vector<int> yVec;
     private:
         int passageCount = 0;
         std::vector <Passage *> passageVector;

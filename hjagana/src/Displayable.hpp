@@ -19,8 +19,8 @@ class Displayable {
         void setHp(int Hp);
         void setType(char t);
         void setIntValue(int v);
-        void setPosX(int x);
-        void setPosY(int y);
+        virtual void setPosX(int x);
+        virtual void setPosY(int y);
         void setWidth(int x);
         void setHeight(int y);
         void addDisplay(Displayable * display);

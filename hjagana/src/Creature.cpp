@@ -19,9 +19,10 @@ void Creature::setHitAction(CreatureAction ha) {
 }
 
 void Creature::draw() {
+    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
     int xPos = this -> getPosX();
     int yPos = this -> getPosY();
     char c = 'C';
-    ObjectDisplayGrid::addObjectToDisplay(new GridChar(c), xPos, yPos);
-    ObjectDisplayGrid::update();
+    grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
+    grid -> update();
 }

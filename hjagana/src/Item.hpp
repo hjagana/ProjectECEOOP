@@ -7,7 +7,7 @@
 class Item: public Displayable {
     public:
         void setOwner(Creature owner);
-        void draw();
+        // void draw();
     private:
 };
 

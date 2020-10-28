@@ -8,6 +8,7 @@ class Sword: public Item {
     public:
         Sword(std::string name);
         void setID(int room, int serial);
+        virtual void draw();
     private:
 };
 

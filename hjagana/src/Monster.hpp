@@ -9,6 +9,9 @@ class Monster: public Creature {
         Monster();
         void setName(std::string n);
         void setID(int room, int serial);
+        void draw();
+        std::string getName();
+        std::string name;
     private:
 };
 
