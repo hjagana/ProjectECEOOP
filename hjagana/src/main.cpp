@@ -25,7 +25,7 @@ int HEIGHT = 41;
 int MESSAGES = 5;
 
 void runDisplay(ObjectDisplayGrid* grid, Dungeon* d) {
-    d -> draw(d);
+    d -> draw();
 }
 
 // void runDisplay(ObjectDisplayGrid* grid, Dungeon* d) {
@@ -145,7 +145,8 @@ int main(int argc, char* argv[]) {
     // Displayable* pGrid= &grid;
 
     // thread to wait for key press
-    KeyboardListener listener(pGrid);
+    Player *player = gameDungeon -> getPlayer();
+    KeyboardListener listener(pGrid, player, gameDungeon);
     std::thread keyboardThread(&KeyboardListener::run, &listener);
 
     // thread to update display

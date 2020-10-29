@@ -1,5 +1,7 @@
 #pragma once
 #include "ObjectDisplayGrid.hpp"
+#include "Player.hpp"
+#include "Dungeon.hpp"
 
 class KeyboardListener {
 private:
@@ -14,7 +16,9 @@ public:
      * Creates a new keyboard listener, you can pass in extra objects here to interact with them during the game if you wish
      * @param grid  Object display grid reference
      */
-    KeyboardListener(ObjectDisplayGrid* grid);
+    KeyboardListener(ObjectDisplayGrid* grid, Player *p, Dungeon *d);
+    Player *p;
+    Dungeon *d;
 
     /**
      * Runs the keyboard listener in a thread

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 
-KeyboardListener::KeyboardListener(ObjectDisplayGrid* _grid) : grid(_grid) {}
+KeyboardListener::KeyboardListener(ObjectDisplayGrid* _grid, Player* _p, Dungeon* _d) : grid(_grid), p(_p), d(_d) {}
 
 void KeyboardListener::run() {
 	grid->writeLine(0, "Press 'x' to exit");
@@ -26,19 +26,45 @@ void KeyboardListener::run() {
 		case '?':
 			grid->writeLine(2, "h, l, k, j, i, ?, H, c, d, p, R, T, w, E, 0-9. H <cmd> for more info");
 			break;
-		// case 'H':
-		// 	grid->writeLine(2, "")
 		case 'h':
-			grid->writeLine(2, "Left 1 Space");
+			if (d->checkMove(p->getPosX()-1, p->getPosY())) {
+				p -> movePlayerLeft();
+				grid->writeLine(2, "Left 1 Space");
+			} else {
+				grid->writeLine(2, "Can't move left anymore!");
+			}
+			// p -> movePlayerLeft();
+			// grid->writeLine(2, "Left 1 Space");
 			break;
 		case 'l':
-			grid->writeLine(2, "Right 1 Space");
+			if (d->checkMove(p->getPosX()+1, p->getPosY())) {
+				p -> movePlayerRight();
+				grid->writeLine(2, "Right 1 Space");
+			} else {
+				grid->writeLine(2, "Can't move right anymore!");
+			}
+			// p -> movePlayerRight();
+			// grid->writeLine(2, "Right 1 Space");
 			break;
 		case 'k':
-			grid->writeLine(2, "Up 1 Space");
+			if (d->checkMove(p->getPosX(), p->getPosY()-1)) {
+				p -> movePlayerUp();
+				grid->writeLine(2, "Up 1 Space");
+			} else {
+				grid->writeLine(2, "Can't move up anymore!");
+			}	
+			// p -> movePlayerUp();
+			// grid->writeLine(2, "Up 1 Space");
 			break;
 		case 'j':
-			grid->writeLine(2, "Down 1 Space");
+			if (d->checkMove(p->getPosX(), p->getPosY()+1)) {
+				p -> movePlayerDown();
+				grid->writeLine(2, "Down 1 Space");
+			} else {
+				grid->writeLine(2, "Can't move down anymore!");
+			}
+			// p -> movePlayerDown();
+			// grid->writeLine(2, "Down 1 Space");
 			break;
 		case 'i':
 			grid->writeLine(2, "Show pack contents");

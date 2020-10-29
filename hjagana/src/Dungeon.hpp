@@ -34,7 +34,7 @@ class Dungeon {
         int getGameHeight();
         int getTopHeight();
         int getBottomHeight();
-        void draw(Dungeon* d);
+        void draw();
         void addRoom(Room* r);
         void addCreature(Creature* c);
         void addPassage(Passage* p);
@@ -44,6 +44,7 @@ class Dungeon {
         void addArmor(Armor *a);
         void addSword(Sword *s);
         void addScroll(Scroll *s);
+        bool checkMove(int x, int y);
         std::vector<Dungeon*> dungeon;
         std::vector<Room*> rooms;
         std::vector<Creature*> creatures;

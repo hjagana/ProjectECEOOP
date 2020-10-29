@@ -9,8 +9,9 @@
 // #include "Passage.hpp"
 #include <iostream>
 #include "curses.h"
+#include <typeinfo>
 
-static GridChar*** objectGrid;
+// static GridChar*** objectGrid;
 // static std::vector<Displayable>** objGridStack;
 
 class ObjectDisplayGrid {
@@ -32,6 +33,7 @@ class ObjectDisplayGrid {
         /** Object deconstructor, to delete the grid character matrix and free ncurses data */
         virtual ~ObjectDisplayGrid();
         void removeFromVector(int x, int y) ;
+        std::vector<GridChar>** getGridStack();
 
         /**
          * Refreshes the grid display

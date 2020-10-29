@@ -20,6 +20,10 @@ ObjectDisplayGrid* ObjectDisplayGrid::getGrid() {
 	return objGrid;
 }
 
+std::vector<GridChar>** ObjectDisplayGrid::getGridStack() {
+	return objGridStack;
+}
+
 int ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight) {
     std::cout << "ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight)" << std::endl;
 	return 1;// <-- change later
@@ -31,14 +35,14 @@ void ObjectDisplayGrid::setTopMessageHeight(int topHeight) {
 ObjectDisplayGrid::ObjectDisplayGrid(int _width, int _height, int _messages) : width(_width), height(_height), messages(_messages) {	
 	// create the 2D array of grid characters
 	// note if you want to write messages instead, ncurses
-	objectGrid = new GridChar**[width];
-	// objGridStack = new std::vector<GridChar>*[width];
+	// objectGrid = new GridChar**[width];
+	objGridStack = new std::vector<GridChar>*[width];
 	for (int i = 0; i < width; i++) {
-		// objGridStack[i] = new std::vector<GridChar>[height];
-		objectGrid[i] = new GridChar*[height];
-		for (int j = 0; j < height; j++) {
-			objectGrid[i][j] = NULL;
-		}
+		objGridStack[i] = new std::vector<GridChar>[height];
+		// objectGrid[i] = new GridChar*[height];
+		// for (int j = 0; j < height; j++) {
+		// 	objectGrid[i][j] = NULL;
+		// }
 	}
 
 	// initialize ncurses
@@ -64,36 +68,41 @@ ObjectDisplayGrid::ObjectDisplayGrid(int _width, int _height, int _messages) : w
 }
 
 void ObjectDisplayGrid::removeFromVector(int x, int y) {
-	objGridStack[x][y].pop_back();
-	if (objGridStack[x][y].empty()){
-		GridChar ch = objGridStack[x][y].back();
-		mvaddch(y, x, ch.getChar());
-	} else {
-		// GridChar ch = ' ';
-		mvaddch(y, x, ' ');
+	if ((0 <= x) && (x < width))  {
+		if ((0 <= y) && (y < height))  {
+			if (!objGridStack[x][y].empty()) {
+				objGridStack[x][y].pop_back();
+				if (!objGridStack[x][y].empty()){
+					GridChar ch = objGridStack[x][y].back();
+					mvaddch(y, x, ch.getChar());
+				} else {
+					// GridChar ch = ' ';
+					mvaddch(y, x, ' ');
+				}	
+			}
+		}
 	}
-
 }
 
 ObjectDisplayGrid::~ObjectDisplayGrid() {
 	// free memory from the dynamically sized object grid
 	for (int i = 0; i < width; i++) {
 		// delete all character objects in the grid
-		for (int j = 0; j < height; j++) {
-			delete objectGrid[i][j];
-		}
+		// for (int j = 0; j < height; j++) {
+		// 	delete objectGrid[i][j];
+		// }
 		// delete the column
-		delete[] objectGrid[i];
-		// delete[] objGridStack[i];
+		// delete[] objectGrid[i];
+		delete[] objGridStack[i];
 	}
 	// delete the array of columns
-	delete[] objectGrid;
-	// delete[] objGridStack;
-	objectGrid = NULL;
-	// objGridStack = NULL;
-
+	// delete[] objectGrid;
+	delete[] objGridStack;
+	// objectGrid = NULL;
+	objGridStack = NULL;
 	// free ncurses data
 	endwin();
+	// endwin();
 }
 
 void ObjectDisplayGrid::addObjectToDisplay(GridChar* ch, int x, int y) {
@@ -103,14 +112,14 @@ void ObjectDisplayGrid::addObjectToDisplay(GridChar* ch, int x, int y) {
 		// y between 0 and height
 		if ((0 <= y) && (y < height)) { // 41 should be "height"
 			// delete existing character if present
-			if (objectGrid[x][y] != NULL) {
-				// objGridStack[x][y].push_back(*ch);
-				delete objectGrid[x][y];
-				// pop from stack
-			}
+			// if (objectGrid[x][y] != NULL) {
+			// 	//objGridStack[x][y].push_back(*ch);
+			// 	//delete objectGrid[x][y];
+			// 	// pop from stack
+			// }
 			// add new character to the internal character list
-			objectGrid[x][y] = ch;
-			// objGridStack[x][y].push_back(*ch);
+			// objectGrid[x][y] = ch;
+			objGridStack[x][y].push_back(*ch);
 			// else push to stack
 			// draws the character on the screen, note it is relative to 0,0 of the terminal
 			mvaddch(y, x, ch->getChar());
@@ -130,35 +139,3 @@ void ObjectDisplayGrid::writeLine(int line, std::string message) {
 	clrtoeol();
 }
 
-// void ObjectDisplayGrid::runDisplay(ObjectDisplayGrid* grid, Dungeon* d) {
-//     std::vector<Room*> rVector = d->getRooms();
-
-//     for (Room* x: rVector) {
-
-//         // int w = x -> getWidth();
-//         // int h = x -> getHeight();
-//         // int xPos = x -> getPosX();
-//         // int yPos = x -> getPosY();
-//         // // std::vector<Creature*> cVector = x->getCreature(); // uses Room to get creature Vector
-//         // // std::vector<Creature*> cVector = d->getCreatures(); // uses Creature to get crature Vector
-//         // for (int i = 0; i < w; i++) {
-//         //     for (int j = 0; j < h; j++) {
-//         //         char c;
-//         //         if (i == 0 || i == (w-1) || j == 0 || j == (h-1)) {
-//         //             c = 'X';
-//         //         }
-//         //         else {
-//         //             c = ' ';
-//         //         }
-//                 grid->addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
-//         //     }
-//         // }
-//         // // update the grid
-//         // grid->update();
-//         // // wait a bit to rejoin
-//         // // wait in a few steps to update faster on keypress
-//         // for (int i = 0; (isRunning && i < 5); i++) {
-//         //     std::this_thread::sleep_for(std::chrono::milliseconds(400));
-//         // }
-//     }
-// }

@@ -94,16 +94,32 @@ int Dungeon::getTopHeight(){
 int Dungeon::getBottomHeight(){
     return bottomHeight;
 }
+bool Dungeon::checkMove(int x, int y) {
+    std::vector<Room*> roomsVec = this -> getRooms();
+    std::vector<Passage*> passageVec = this -> getPassages();
+    for (Room* r: roomsVec){
+        if (r -> checkMove(x, y)) {
+            return true;
+        }
+    }
+    for (Passage* p: passageVec) {
+        if (p -> checkMove(x, y)) {
+            return true;
+        }
+    }
+    return false;
+}
 
-void Dungeon::draw(Dungeon *d) {
-    std::vector<Room*> roomsVec = d -> getRooms();
-    std::vector<Creature*> creaturesVec = d -> getCreatures();
-    std::vector<Monster*> monstersVec = d -> getMonsters();
-    std::vector<Passage*> passagesVec = d -> getPassages();
+
+void Dungeon::draw() {
+    std::vector<Room*> roomsVec = this -> getRooms();
+    std::vector<Creature*> creaturesVec = this -> getCreatures();
+    std::vector<Monster*> monstersVec = this -> getMonsters();
+    std::vector<Passage*> passagesVec = this -> getPassages();
     // std::vector<Item*> itemsVec = d -> getItems();
-    std::vector<Armor*> armorsVec = d -> getArmors();
-    std::vector<Scroll*> scrollsVec = d -> getScrolls();
-    std::vector<Sword*> swordsVec = d -> getSwords();
+    std::vector<Armor*> armorsVec = this -> getArmors();
+    std::vector<Scroll*> scrollsVec = this -> getScrolls();
+    std::vector<Sword*> swordsVec = this -> getSwords();
 
     for (Room* r: roomsVec) {
         r -> draw();
@@ -111,7 +127,7 @@ void Dungeon::draw(Dungeon *d) {
     for (Passage* p: passagesVec) {
         p -> draw();
     }
-    Player *playuh = d -> getPlayer();
+    Player *playuh = this -> getPlayer();
     playuh -> draw();
     for (Creature* c: creaturesVec){
         c -> draw();

@@ -296,19 +296,39 @@ void GameXMLHandler::endElement(const XMLCh* uri, const XMLCh* localName, const 
     if (case_insensitive_match(qNameStr, "Room")) {
         displayableVector.pop_back();
     } else if (case_insensitive_match(qNameStr, "Scroll")) {
+        Scroll* s = (Scroll*) displayableVector.back();
         displayableVector.pop_back();
+        if (typeid(displayableVector.back()) == typeid(Room)) {
+            Room* r = (Room *) displayableVector.back();
+            s -> setPosX(r -> getPosX() + s -> getPosX());
+            s -> setPosY(r -> getPosY() + s -> getPosY());
+        // } else if (typeid(displayableVector.back()) == typeid(Player)) {
+
+        }
     } else if (case_insensitive_match(qNameStr, "ItemAction")) {
         actionVector.pop_back();
     } else if (case_insensitive_match(qNameStr, "Player")){
+        Player* p = (Player*) displayableVector.back();
         displayableVector.pop_back();
+        Room* r = (Room*) displayableVector.back();
+        r -> setCreature(p);
+        p -> setPosX(r -> getPosX() + p -> getPosX());
+        p -> setPosY(r -> getPosY() + p -> getPosY());
     } else if (case_insensitive_match(qNameStr, "CreatureAction")) {
         actionVector.pop_back();
     } else if (case_insensitive_match(qNameStr, "Sword")) {
         displayableVector.pop_back();
     } else if (case_insensitive_match(qNameStr,  "Monster")) {
+        Monster* m = (Monster*) displayableVector.back();
         displayableVector.pop_back();
+        Room* r = (Room*) displayableVector.back();
+        r -> setCreature(m);
+        m -> setPosX(r -> getPosX() + m -> getPosX());
+        m -> setPosY(r -> getPosY() + m -> getPosY());
     } else if (case_insensitive_match(qNameStr, "Armor")) {
+        Armor* a = (Armor*) displayableVector.back();
         displayableVector.pop_back();
+        // Displayable* d = (Displayable*) displayableVector.back();
     } else if (case_insensitive_match(qNameStr, "Passage")) {
         displayableVector.pop_back();
     }

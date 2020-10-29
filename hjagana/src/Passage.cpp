@@ -30,11 +30,21 @@ void Passage::setPosX(int _x) {
 void Passage::setPosY(int _y) {
     yVec.push_back(_y);
 }
+bool Passage::checkMove(int x, int y) {
+    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
+    if (!grid->objGridStack[x][y].empty()) {
+        GridChar ch = grid->objGridStack[x][y].back();
+        if (ch.getChar() == '#' || ch.getChar() == '+' || ch.getChar() == '.') {
+            return true;
+        }
+    }
+    return false;
+}
 
 void Passage::draw() {
     char c;
     ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    grid -> writeLine(1, std::to_string(xVec.size()));
+    grid -> writeLine(1, std::to_string(xVec.size()) + " ");
     grid -> writeLine(2, std::to_string(yVec.size()));
 
     for (int i = 1; i < xVec.size(); i++) {
@@ -42,12 +52,6 @@ void Passage::draw() {
         int y1 = yVec[i - 1];
         int x2 = xVec[i];
         int y2 = yVec[i];
-
-        int check1 = x1-x2;
-        int check2 = y1-y2;
-        // int check3 = x2-x1;
-        // int check4 = y2-y1;
-        // int check3 = 0; // <-- this variable should check if we are at a new room
 
         if (x1 != x2) {
             int xSmall = 0;
@@ -84,7 +88,6 @@ void Passage::draw() {
     int c1 = xVec[0];
     int c2 = yVec[0];
     grid -> addObjectToDisplay(new GridChar(c), c1, c2);
-    // int c3 = xVec.back();
     int c3 = xVec[xVec.size()-1];
     int c4 = yVec[yVec.size()-1];
     grid -> addObjectToDisplay(new GridChar(c), c3, c4);

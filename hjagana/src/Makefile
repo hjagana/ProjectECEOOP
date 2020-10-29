@@ -1,5 +1,5 @@
 OBJS = *.o
-CC = g++ -g -lncurses -std=c++14 -I /usr/local/Cellar/xerces-c/3.2.3/lib -L /usr/local/Cellar/xerces-c/3.2.3/include *.cpp -o GameXML -lxerces-c
+CC = g++ -Wall -g -lncurses -std=c++14 -I /usr/local/Cellar/xerces-c/3.2.3/lib -L /usr/local/Cellar/xerces-c/3.2.3/include *.cpp -o GameXML -lxerces-c
 INCLUDE =
 LIBS = 
 CFLAGS = -g

@@ -10,6 +10,12 @@ class Player: public Creature {
         void setWeapon(Item sword);
         void setArmor(Item armor);
         void draw();
+        //void movePlayerX(int d);
+        //void movePlayerY(int d);
+        virtual void movePlayerUp();
+        virtual void movePlayerDown();
+        virtual void movePlayerLeft();
+        virtual void movePlayerRight();
     private:
 };
 

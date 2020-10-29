@@ -16,6 +16,7 @@ class Passage: public Structure {
         virtual void setPosY(int _y);
         void freePassage();
         virtual void draw();
+        bool checkMove(int x, int y);
         std::vector<int> xVec;
         std::vector<int> yVec;
     private:
