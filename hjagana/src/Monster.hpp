@@ -12,6 +12,7 @@ class Monster: public Creature {
         void draw();
         std::string getName();
         std::string name;
+        bool checkCollision(int x, int y);
     private:
 };
 

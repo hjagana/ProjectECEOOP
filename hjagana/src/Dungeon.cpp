@@ -97,6 +97,7 @@ int Dungeon::getBottomHeight(){
 bool Dungeon::checkMove(int x, int y) {
     std::vector<Room*> roomsVec = this -> getRooms();
     std::vector<Passage*> passageVec = this -> getPassages();
+    std::vector<Monster*> monstersVec = this -> getMonsters();
     for (Room* r: roomsVec){
         if (r -> checkMove(x, y)) {
             return true;
@@ -108,6 +109,97 @@ bool Dungeon::checkMove(int x, int y) {
         }
     }
     return false;
+}
+
+bool Dungeon::checkCollision(int x, int y){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    std::vector<Monster*> creatureVector = this->getMonsters();
+    bool pass = false;
+    for (Monster* creature: creatureVector) {
+        pass = creature->checkCollision(x, y);
+        //there is a monster in the position of the player (or the position that they want to move to??)
+        if (pass == true){
+            int hit = creature->getMaxhit();
+            grid->writeLine(11, "      " + creature->getName() + " did " + std::to_string(hit) + " damage!");
+            // grid->writeLine(4, "Creature HP: " + std::to_string(creature->getHp()));
+            // grid->writeLine(5, "Creature Hit: " + std::to_string(hit));
+            int healthPoints = this->getPlayer()->getHp();
+            this->getPlayer()->setHp(healthPoints-hit);
+            // grid->writeLine(8, "HP-hit: " + std::to_string(healthPoints-hit));
+            // grid->writeLine(9, "NewHP: " + std::to_string(this->getPlayer()->getHp()));
+
+            int phit = this->getPlayer()->getMaxhit();
+            grid->writeLine(10, "Info: " + (std::string) "Player" + " did " + std::to_string(phit) + " damage!");
+            // grid->writeLine(7, "Player Hit: " + std::to_string(phit));
+            int creatureHP = creature->getHp();
+            // grid->writeLine(6, "Creature SetHP Parameter: " + std::to_string(creatureHP-phit));
+            creature->setHp(creatureHP-phit);
+            if (creature->getHp() <= 0) {
+                grid->objGridStack[x][y].pop_back();
+                grid->writeLine(11, "      " + creature->getName() + " died.");   
+            }
+            if (this->getPlayer()->getHp() <= 0) {
+                grid->writeLine(11, "      " + creature->getName() + " killed you!");
+            }
+            break;
+        }
+    }
+    return pass;
+    //go through the creature list
+    //see if they are at the position 5,4 or whatever
+    //pass in player as parameter
+    //check collisions functions
+}
+
+bool Dungeon::addItemToPack(int x, int y){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    std::vector<Item *> itemVector = this->getItems();
+    bool pass = false;
+    for(Item* item: itemVector){
+        int itemX = item->getPosX();
+        int itemY = item->getPosY();
+
+        if(x == itemX && y == itemY){
+            p->addItemToPack(item);
+            grid->objGridStack[x][y].pop_back();
+            return true;
+        }
+    }
+    return pass;
+}
+
+bool Dungeon::removeItemToPack(int x, int y){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    std::vector<Item *> itemVector = this->getItems();
+    if (!(grid->objGridStack[x][y].empty())){
+        for(Item* item: itemVector){
+        int itemX = item->getPosX();
+        int itemY = item->getPosY();
+
+        if(x == itemX && y == itemY){
+            // player->removeItemFromPack(item);
+            //find the name of the item
+            //add it at the position
+            // grid->gridStack[x][y].push_back(item);
+            return true;
+        }
+    }
+        //find the correct item from the pack
+        //remove item from player stack
+    }
+
+    bool pass = false;
+    // for(Item* item: itemVector){
+    //     int itemX = item->getXPos();
+    //     int itemY = item->getYPos();
+
+    //     if(x == itemX && y == itemY){
+    //         player->addItemToPack(item);
+    //         grid->gridStack[x][y].pop_back();
+    //         return true;
+    //     }
+    // }
+    return pass;
 }
 
 

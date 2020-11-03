@@ -332,28 +332,6 @@ void GameXMLHandler::endElement(const XMLCh* uri, const XMLCh* localName, const 
     } else if (case_insensitive_match(qNameStr, "Passage")) {
         displayableVector.pop_back();
     }
-
-    // EMAD HELPED WITH THIS CODE  -->
-    // if (case_insensitive_match(qNameStr, "Room")) {
-    //     if (typeid(displayableVector.back()).name() == "Room*") 
-    //         if (displayableVector.back() == NULL) {
-    //             std::cout << "Stack is Empty!" << std::endl;
-    //         } else {
-    //             Room* r = displayableVector.back(); // might not be necessary
-    //             dispalyableVector.pop_back();
-    //         }
-    // }
-    // char *  qNameStr = xercesc::XMLString::transcode(qName);
-    // if (case_insensitive_match(qNameStr,"Students")) {
-    //     if (studentCount != maxStudents) {
-    //         std::cout <<"wrong number of students parsed, should be " << maxStudents << ", is " << studentCount << std::endl;
-    //     }
-    // } else if (case_insensitive_match(qNameStr,"Student")) {
-    //     studentBeingParsed = nullptr;
-    // } else if (case_insensitive_match(qNameStr,"Activity")) {
-    //     activityBeingParsed->toString();
-    //     activityBeingParsed = nullptr;
-    // }
     xercesc::XMLString::release(&qNameStr);
 
 }

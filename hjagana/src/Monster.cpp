@@ -16,6 +16,20 @@ std::string Monster::getName() {
     return name;
 }
 
+
+bool Monster::checkCollision(int x, int y){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int monsterX = this->getPosX();
+    int monsterY = this->getPosY();
+
+    if(x == monsterX && y == monsterY){
+        // grid->gridStack[x][y].pop_back();
+        return true;
+    }
+    return false;
+
+}
+
 void Monster::draw() {
     std::string typeofMonster = this -> getName();
     ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();

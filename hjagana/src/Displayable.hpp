@@ -29,6 +29,8 @@ class Displayable {
         int getPosY();
         int getHeight();
         int getWidth();
+        int getHp();
+        int getMaxhit();
         GridChar*** objectGrid;
     private:
         std::vector<Displayable *> displayableVector;
@@ -37,5 +39,8 @@ class Displayable {
         int posY; // position y
         int w; // width
         int h; // height
+        int maxHit;
+        int hitPoints;
+        int hpMoveVal;
 };
 #endif

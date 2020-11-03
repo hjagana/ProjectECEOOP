@@ -5,9 +5,10 @@ Creature::Creature() {
     // std::cout << "Creature::Creature()" << std::endl;
 }
 
-void Creature::setHp(int h) {
-    // std::cout << "Creature::setHp(int h)" << std::endl;
-}
+// void Creature::setHp(int h) {
+//     hitpoints = h;
+//     // std::cout << "Creature::setHp(int h)" << std::endl;
+// }
 void Creature::setHpMoves(int hpm) {
     // std::cout << "Creature::setHpMoves(int hpm)" << std::endl;
 }

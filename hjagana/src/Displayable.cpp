@@ -10,13 +10,16 @@ void Displayable::setInvisible() {
 void Displayable::setVisible() {
     // std::cout << "Displayable::setVisible()" << std::endl;
 }
-void Displayable::setMaxhit(int maxHit){
+void Displayable::setMaxhit(int _maxHit){
+    maxHit = _maxHit;
     // std::cout << "Displayable::setMaxhit(int maxHit)" << std::endl;
 }
 void Displayable::setHpMove(int hpMoves) {
+    hpMoveVal = hpMoves;
     // std::cout << "Displayable::setHpMove(int hpMoves)" << std::endl;
 }
 void Displayable::setHp(int Hp) {
+    hitPoints = Hp;
     // std::cout << "Displayable::setHp(int Hp)" << std::endl;
 }
 void Displayable::setType(char t) {
@@ -57,6 +60,15 @@ int Displayable::getHeight() {
 int Displayable::getWidth() {
     return w;
     // std::cout << "Displayable::getWidth()" << std::endl;
+}
+
+int Displayable::getHp() {
+    return hitPoints;
+}
+
+int Displayable::getMaxhit() {
+    int randNum = rand() % (maxHit-0+1)+0;
+    return randNum;
 }
 
 void Displayable::addDisplay (Displayable * display) {

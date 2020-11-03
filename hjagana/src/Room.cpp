@@ -29,6 +29,7 @@ void Room::freeRoom(){
 }
 
 bool Room::checkMove(int x, int y) {
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
     int offX = this->getPosX();
     int offY = this->getPosY();
     int w = this -> getWidth();
@@ -36,6 +37,11 @@ bool Room::checkMove(int x, int y) {
     if (x > (offX) && x < w+offX && y > (offY) && y < (h+offY)) {
         for (int i = offX; i < w + offX; i++) {
             for (int j = offY; j < h + offY; j++) {
+                GridChar ch = grid->objGridStack[x][y].back();
+                if(ch.getChar() == 'T' || ch.getChar() == 'H' || ch.getChar() == 'S'){
+                    //don't move if there is a creature there
+                    return false;
+                }
                 if (x == (offX) || x == (w+offX-1) || y == (offY) || y == (h+offY-1)) {
                     return false;
                 } else {

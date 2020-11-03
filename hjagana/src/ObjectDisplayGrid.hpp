@@ -34,7 +34,7 @@ class ObjectDisplayGrid {
         virtual ~ObjectDisplayGrid();
         void removeFromVector(int x, int y) ;
         std::vector<GridChar>** getGridStack();
-
+        int topHeightMessage;
         /**
          * Refreshes the grid display
          */
@@ -55,6 +55,7 @@ class ObjectDisplayGrid {
          * @param update  If true, immediately updates the screen
          */
         virtual void writeLine(int line, std::string message);
+        virtual void writeTopLine(int line, std::string message);
         // void runDisplay(ObjectDisplayGrid* g, Dungeon* d);
         
         

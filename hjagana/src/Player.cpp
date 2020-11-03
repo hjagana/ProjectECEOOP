@@ -7,6 +7,30 @@ void Player::setWeapon(Item sword) {
 void Player::setArmor(Item armor) {
     // std::cout << "Player::setArmor(Item armor)" << std::endl;
 }
+
+void Player::setName(std::string _name){
+    name = _name;
+}
+void Player::addItemToPack(Item *item){
+    itemsPack.push_back(item);
+    // add item to pack
+}
+
+void Player::removeItemFromPack(Item *item){
+    itemsPack.pop_back();
+    //remove item from pack
+    //how to get rid of a certain item from the pack
+}
+
+std::vector<Item *> Player::getItemPack() {
+    return itemsPack;
+}
+
+std::string Player::getName(){
+    return name;
+}
+
+
 void Player::draw() {
     ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
     int xPos = this -> getPosX();

@@ -45,6 +45,9 @@ class Dungeon {
         void addSword(Sword *s);
         void addScroll(Scroll *s);
         bool checkMove(int x, int y);
+        bool checkCollision(int x, int y);
+        bool addItemToPack(int x, int y);
+        bool removeItemToPack(int x, int y);
         std::vector<Dungeon*> dungeon;
         std::vector<Room*> rooms;
         std::vector<Creature*> creatures;
@@ -64,7 +67,6 @@ class Dungeon {
         int gameHeight;
         int topHeight;
         int bottomHeight;
-
     private:
 }; 
 

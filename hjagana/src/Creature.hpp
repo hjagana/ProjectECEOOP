@@ -9,12 +9,13 @@ class CreatureAction;
 class Creature: public Displayable {
     public:
         Creature();
-        void setHp(int h);
+        // virtual void setHp(int h);
         void setHpMoves(int hpm);
         void setDeathAction(CreatureAction da);
         void setHitAction(CreatureAction ha);
         void draw();
     private:
+        // int hitpoints;
 };
 
 #endif

@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
         xercesc::XMLString::release(&message);
         return 1;
     }
-    fileName = "../xmlfiles/badScroll.xml";
+    fileName = argv[1];
     // switch (argc) {
     //     case 2:
     //         fileName = "./xmlfiles/" + ((std::string) argv[1]);
@@ -139,6 +139,7 @@ int main(int argc, char* argv[]) {
     // create an initialize the object display grid
     // ObjectDisplayGrid grid(gameDungeon->getWidth(), gameDungeon->getGameHeight(), MESSAGES);
     ObjectDisplayGrid* pGrid = ObjectDisplayGrid::getGrid(gameDungeon->getWidth(), gameDungeon->getGameHeight(), MESSAGES);
+    pGrid->setTopMessageHeight(gameDungeon->getTopHeight());
     // ObjectDisplayGrid grid(WIDTH, HEIGHT, MESSAGES);
     // ObjectDisplayGrid* pGrid = grid;
     // Displayable grid(WIDTH, HEIGHT, MESSAGES);

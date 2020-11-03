@@ -25,11 +25,12 @@ std::vector<GridChar>** ObjectDisplayGrid::getGridStack() {
 }
 
 int ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight) {
-    std::cout << "ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight)" << std::endl;
+    // std::cout << "ObjectDisplayGrid::getObjectDisplayGrid(int gameHeight, int width, int topHeight)" << std::endl;
 	return 1;// <-- change later
 }
 void ObjectDisplayGrid::setTopMessageHeight(int topHeight) {
-    std::cout << "ObjectDisplayGrid::setTopMessageHeight(int topHeight)" << std::endl;
+	topHeightMessage = topHeight;
+    // std::cout << "ObjectDisplayGrid::setTopMessageHeight(int topHeight)" << std::endl;
 }
 
 ObjectDisplayGrid::ObjectDisplayGrid(int _width, int _height, int _messages) : width(_width), height(_height), messages(_messages) {	
@@ -74,10 +75,10 @@ void ObjectDisplayGrid::removeFromVector(int x, int y) {
 				objGridStack[x][y].pop_back();
 				if (!objGridStack[x][y].empty()){
 					GridChar ch = objGridStack[x][y].back();
-					mvaddch(y, x, ch.getChar());
+					mvaddch(y + topHeightMessage, x, ch.getChar());
 				} else {
 					// GridChar ch = ' ';
-					mvaddch(y, x, ' ');
+					mvaddch(y + topHeightMessage, x, ' ');
 				}	
 			}
 		}
@@ -122,7 +123,7 @@ void ObjectDisplayGrid::addObjectToDisplay(GridChar* ch, int x, int y) {
 			objGridStack[x][y].push_back(*ch);
 			// else push to stack
 			// draws the character on the screen, note it is relative to 0,0 of the terminal
-			mvaddch(y, x, ch->getChar());
+			mvaddch(y + topHeightMessage, x, ch->getChar());
 		}
 	}
 }
@@ -134,8 +135,17 @@ void ObjectDisplayGrid::update() {
 
 void ObjectDisplayGrid::writeLine(int line, std::string message) {
 	// messages start from 0, height and go until width,(height + messages)
-	mvaddstr(height + line, 0, message.c_str());
+	mvaddstr(height + line + topHeightMessage, 0, message.c_str());
 	// clear after what we wrote to EOL
 	clrtoeol();
 }
+
+void ObjectDisplayGrid::writeTopLine(int line, std::string message) {
+	// messages start from 0, height and go until width,(height + messages)
+	mvaddstr(line, 0, message.c_str());
+	// clear after what we wrote to EOL
+	clrtoeol();
+}
+
+
 
