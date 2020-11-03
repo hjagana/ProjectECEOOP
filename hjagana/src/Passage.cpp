@@ -44,8 +44,8 @@ bool Passage::checkMove(int x, int y) {
 void Passage::draw() {
     char c;
     ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    grid -> writeLine(1, std::to_string(xVec.size()) + " ");
-    grid -> writeLine(2, std::to_string(yVec.size()));
+    // grid -> writeLine(1, std::to_string(xVec.size()) + " ");
+    // grid -> writeLine(2, std::to_string(yVec.size()));
 
     for (int i = 1; i < xVec.size(); i++) {
         int x1 = xVec[i - 1];

@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
         xercesc::XMLString::release(&message);
         return 1;
     }
-    fileName = "../xmlfiles/testDrawing.xml";
+    fileName = "../xmlfiles/badScroll.xml";
     // switch (argc) {
     //     case 2:
     //         fileName = "./xmlfiles/" + ((std::string) argv[1]);

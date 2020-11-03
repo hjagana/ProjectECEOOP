@@ -33,10 +33,10 @@ bool Room::checkMove(int x, int y) {
     int offY = this->getPosY();
     int w = this -> getWidth();
     int h = this -> getHeight();
-    if (x == (w) || x == (w+offX) || y == (h) || y == (h+offY)) {
-        for (int i = 0; i < w; i++) {
-            for (int j = 0; j < h; j++) {
-                if (x == (w) || x == (w+offX) || y == (h) || y == (h+offY)) {
+    if (x > (offX) && x < w+offX && y > (offY) && y < (h+offY)) {
+        for (int i = offX; i < w + offX; i++) {
+            for (int j = offY; j < h + offY; j++) {
+                if (x == (offX) || x == (w+offX-1) || y == (offY) || y == (h+offY-1)) {
                     return false;
                 } else {
                     return true;
