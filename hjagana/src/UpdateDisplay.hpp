@@ -1,12 +1,17 @@
 #ifndef UPDATEDISPLAY_H_
 #define UPDATEDISPLAY_H_
 
-#include "CreatureAction.hpp"
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class UpdateDisplay : public CreatureAction {
-    UpdateDisplay(std::string _name, Creature* _owner);
+#include "CreatureAction.hpp"
+
+class Creature;
+class UpdateDisplay: public CreatureAction{
+    private:
+
+    public:
+        UpdateDisplay(std::string name, Creature *owner);
 };
 
-#endif
+#endif /* UPDATEDISPLAY_H_ */

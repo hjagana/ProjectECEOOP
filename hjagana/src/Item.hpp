@@ -1,14 +1,23 @@
 #ifndef ITEM_H_
 #define ITEM_H_
 
-#include "Displayable.hpp"
-#include "Creature.hpp"
+#include <string>
+#include <vector>
 
-class Item: public Displayable {
-    public:
-        void setOwner(Creature owner);
-        // void draw();
+#include "Displayable.hpp"
+#include "ObjectDisplayGrid.hpp"
+
+class Creature;
+class Item: public Displayable{
     private:
+
+    public:
+        Item();
+        virtual void setOwner(Creature* _owner);
+        // virtual void Draw();
+        virtual Creature* getOwner();
+    protected:
+        Creature * owner;
 };
 
-#endif
+#endif /* ITEM_H_ */

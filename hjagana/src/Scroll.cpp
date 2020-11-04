@@ -1,19 +1,34 @@
 #include "Scroll.hpp"
+
+#include <string>
 #include <iostream>
 
-Scroll::Scroll(std::string name) {
-    // std::cout << "Scroll::Scroll(std::string name)" << std::endl;
+Scroll::Scroll(std::string name){
 }
 
-void Scroll::setID(int room, int serial) {
-    // std::cout << "Scroll::setID(int room, int serial)" << std::endl;
+void Scroll::setId(int room, int serial){
+
 }
 
-void Scroll::draw(){
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int xPos = this -> getPosX();
-    int yPos = this -> getPosY();
+void Scroll::setName(std::string _itemName){
+    itemName = _itemName;
+}
+
+std::string Scroll::getName(){
+    return itemName;
+}
+
+void Scroll::Draw(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    // int width = this->getWidth();
+    // int height = this->getHeight();
+    int x = this->getXPos();
+    int y = this->getYPos();
+    // Creature * owner = this->getOwner();
+    // std::cout << "item" << std::endl;
+    // owner.get
     char c = '?';
-    grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
-    grid -> update();
+    grid->addObjectToDisplay(new GridChar(c), x, y);
+
+    grid->update();
 }

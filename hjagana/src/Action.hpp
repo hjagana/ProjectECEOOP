@@ -2,22 +2,17 @@
 #define ACTION_H_
 
 #include <string>
-#include <iostream>
-#include <algorithm>
-#include <string>
 #include <vector>
 
-class Action {
-    public:
-        void setMessage(std::string msg);
-        void setIntValue(int v);
-        void setCharValue(char c);
-        void addAction(Action * action);
-        void freeAction();
+
+class Action{
     private:
-        std::vector <Action *> actionVector;
-        int actionCount = 0;
-    
+
+    public:
+        Action();
+        virtual void setMessage(std::string msg);
+        virtual void setIntValue(int v);
+        virtual void setCharValue(char c);
 };
 
-#endif
+#endif /* ACTION_H_ */

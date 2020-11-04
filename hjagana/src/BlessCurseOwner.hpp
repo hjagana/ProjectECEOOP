@@ -1,14 +1,19 @@
 #ifndef BLESSCURSEOWNER_H_
 #define BLESSCURSEOWNER_H_
 
+#include <string>
+#include <vector>
+
 #include "ItemAction.hpp"
-#include "Creature.hpp"
 
 class Creature;
-class ItemAction;
-class BlessCurseOwner : public ItemAction {
+class BlessCurseOwner: public ItemAction{
+    private:
+    // Creature *owner;
+
     public:
-        BlessCurseOwner(Creature* _owner);
+        BlessCurseOwner(Creature *owner);
+        
 };
 
-#endif
+#endif /* BLESSCURSEOWNER_H_ */

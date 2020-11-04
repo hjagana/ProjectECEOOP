@@ -1,7 +1,8 @@
 #include "CreatureAction.hpp"
+
+#include <string>
 #include <iostream>
 
-CreatureAction::CreatureAction(Creature* _owner) {
-    // Creature* owner = _owner;
-    // std::cout << "CreatureAction::CreatureAction(Creature _owner)" << std::endl;
+CreatureAction::CreatureAction(Creature* owner){
+    // std::cout <<"CreatureAction:" << std::endl;
 }

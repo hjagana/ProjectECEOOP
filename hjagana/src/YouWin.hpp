@@ -1,12 +1,17 @@
 #ifndef YOUWIN_H_
 #define YOUWIN_H_
 
-#include "CreatureAction.hpp"
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class YouWin : public CreatureAction {
-    YouWin(std::string _name, Creature* _owner);
+#include "CreatureAction.hpp"
+
+class Creature;
+class YouWin: public CreatureAction{
+    private:
+
+    public:
+        YouWin(std::string name, Creature *owner);
 };
 
-#endif
+#endif /* YPUWIN_H_ */

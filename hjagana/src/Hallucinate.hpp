@@ -1,13 +1,20 @@
 #ifndef HALLUCINATE_H_
 #define HALLUCINATE_H_
 
-#include "ItemAction.hpp"
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class Hallucinate : public ItemAction {
-    Hallucinate(Creature* _owner);
+#include "ItemAction.hpp"
+// #include "Creature.hpp"
+// #include "Item.hpp"
+
+class Creature;
+class Hallucinate: public ItemAction{
+    private:
+
+    public:
+        Hallucinate(Creature* owner);
+        //Item owner;
 };
 
-
-#endif
+#endif /* HALLUCINATE_H_ */

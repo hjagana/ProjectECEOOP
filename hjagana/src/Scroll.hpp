@@ -1,15 +1,21 @@
 #ifndef SCROLL_H_
 #define SCROLL_H_
 
-#include "Item.hpp"
 #include <string>
+#include <vector>
 
-class Scroll: public Item {
+#include "Item.hpp"
+
+class Scroll: public Item{
+    private:
+    std::string itemName;
+
     public:
         Scroll(std::string name);
-        void setID(int room, int serial);
-        virtual void draw();
-    private:
+        virtual void setName(std::string _itemName);
+        virtual std::string getName();
+        virtual void setId(int room, int serial);
+        virtual void Draw();
 };
 
-#endif
+#endif /* SCROLL_H_ */

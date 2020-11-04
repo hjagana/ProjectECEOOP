@@ -1,116 +1,106 @@
 #include "Player.hpp"
-#include <iostream>
 
-void Player::setWeapon(Item sword) {
-    // std::cout << "Player::setWeapon(Item sword)" << std::endl;
+#include <string>
+#include <iostream>
+#include <vector>
+
+Player::Player(){
 }
-void Player::setArmor(Item armor) {
-    // std::cout << "Player::setArmor(Item armor)" << std::endl;
+
+void Player::setWeapon(Item* sword){
+}
+
+void Player::setArmor(Item* armor){
+    creatureArmor = armor;
+}
+
+Item* Player::getArmor(){
+    return creatureArmor;
 }
 
 void Player::setName(std::string _name){
     name = _name;
-}
-void Player::addItemToPack(Item *item){
-    itemsPack.push_back(item);
-    // add item to pack
-}
-
-void Player::removeItemFromPack(Item *item){
-    itemsPack.pop_back();
-    //remove item from pack
-    //how to get rid of a certain item from the pack
-}
-
-std::vector<Item *> Player::getItemPack() {
-    return itemsPack;
 }
 
 std::string Player::getName(){
     return name;
 }
 
-
-void Player::draw() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int xPos = this -> getPosX();
-    int yPos = this -> getPosY();
-    char c = '@';
-    grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
-    grid -> update();
+void Player::addItemToPack(Item *item){
+    itemsPack.push_back(item);
 }
 
-void Player::movePlayerUp() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int x = this->getPosX();
-    int y = this->getPosY();
-    grid->removeFromVector(x, y);
-    grid -> update();
-
-    this->setPosY(y-1);
-    int newY = this->getPosY();
-    int newX = this->getPosX();
-    char c = '@';
-    grid -> addObjectToDisplay(new GridChar(c), newX, newY);
-    grid -> update();
-}
-void Player::movePlayerDown() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int x = this->getPosX();
-    int y = this->getPosY();
-    grid->removeFromVector(x, y);
-    grid -> update();
-
-    this->setPosY(y+1);
-    int newY = this->getPosY();
-    int newX = this->getPosX();
-    char c = '@';
-    grid -> addObjectToDisplay(new GridChar(c), newX, newY);
-    grid -> update();
-}
-void Player::movePlayerRight() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int x = this->getPosX();
-    int y = this->getPosY();
-    grid->removeFromVector(x, y);
-    grid -> update();
-
-    this->setPosX(x+1);
-    int newX = this->getPosX();
-    int newY = this->getPosY();
-    char c = '@';
-    grid -> addObjectToDisplay(new GridChar(c), newX, y);
-    grid -> update();
-}
-void Player::movePlayerLeft() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int x = this->getPosX();
-    int y = this->getPosY();
-    grid->removeFromVector(x, y);
-    grid -> update();
-
-    this->setPosX(x-1);
-    int newX = this->getPosX();
-    // int newY = this->getPosY();
-    char c = '@';
-    grid -> addObjectToDisplay(new GridChar(c), newX, y);
-    grid -> update();
+std::vector<Item *> Player::getItemPack() {
+    return itemsPack;
 }
 
-// void Player::movePlayerX(int d) {
-//     ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-//     grid->writeLine(2, "HERE1");
-//     // grid -> removeFromVector(this->getPosX(), this -> getPosY());
-//     this -> setPosX((this->getPosX()) + d);
-//     // char c = '@';
-//     // grid -> addObjectToDisplay(new GridChar(c), this -> getPosX(), this -> getPosY());
-//     // grid -> update();
-// }
-// void Player::movePlayerY(int d) {
-//     // ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-//     // grid -> removeFromVector(this->getPosX(), this -> getPosY());
-//     this -> setPosY((this->getPosY()) + d);
-//     char c = '@';
-//     // grid -> addObjectToDisplay(new GridChar(c), this -> getPosX(), this -> getPosY());
-//     // grid -> update();
-// }
+void Player::removeItemFromPack(int itemNum){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    itemsPack.erase(itemsPack.begin() + itemNum - 1);
+    return;
+}
+
+void Player::Draw(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int xPos = this->getXPos();
+    int yPos = this->getYPos();
+    char c = '@';
+    grid->addObjectToDisplay(new GridChar(c), xPos, yPos);
+    grid->update();
+}
+
+void Player::movePlayerLeft(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int xPos = this->getXPos();
+    int yPos = this->getYPos();
+    grid->removeFromVector(xPos, yPos);
+
+
+    this->setXPos(xPos - 1);
+    int newX = this->getXPos();
+    char c = '@';
+    grid->addObjectToDisplay(new GridChar(c), newX, yPos);
+    grid->update();
+}
+
+void Player::movePlayerRight(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int xPos = this->getXPos();
+    int yPos = this->getYPos();
+    grid->removeFromVector(xPos, yPos);
+
+
+    this->setXPos(xPos + 1);
+    int newX = this->getXPos();
+    char c = '@';
+    grid->addObjectToDisplay(new GridChar(c), newX, yPos);
+    grid->update();
+}
+
+void Player::movePlayerUp(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int xPos = this->getXPos();
+    int yPos = this->getYPos();
+    grid->removeFromVector(xPos, yPos);
+
+
+    this->setYPos(yPos - 1);
+    int newY = this->getYPos();
+    char c = '@';
+    grid->addObjectToDisplay(new GridChar(c), xPos, newY);
+    grid->update();
+}
+
+void Player::movePlayerDown(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int xPos = this->getXPos();
+    int yPos = this->getYPos();
+    grid->removeFromVector(xPos, yPos);
+
+
+    this->setYPos(yPos + 1);
+    int newY = this->getYPos();
+    char c = '@';
+    grid->addObjectToDisplay(new GridChar(c), xPos, newY);
+    grid->update();
+}

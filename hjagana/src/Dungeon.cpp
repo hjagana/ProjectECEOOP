@@ -1,275 +1,268 @@
 #include "Dungeon.hpp"
+
+#include <string>
 #include <iostream>
 
-Dungeon* Dungeon::dungeonR = NULL;
+Dungeon::Dungeon(){
+}
 
-Dungeon* Dungeon::getDungeon(std::string name, int width, int gameHeight) {
-    // std::cout << "Dungeon::getDungeon(std::string name, int width, int gameHeight)" << std::endl;
-    if (dungeonR == NULL) {
-        dungeonR = new Dungeon();
+Dungeon* Dungeon::dungeonCreated = nullptr;
+Dungeon& Dungeon::getDungeon(std::string name, int width, int gameHeight){
+    if (dungeonCreated == NULL){
+        dungeonCreated = new Dungeon();
     }
-    return dungeonR;
-}
-void Dungeon::addRoom(Room* r) {
-    rooms.push_back(r);
-    // std::cout << "Dungeon::addRoom(Room)" << std::endl;
-}
-void Dungeon::addCreature(Creature* c){
-    creatures.push_back(c);
-    // std::cout << "Dungeon::addCreature(Creature)" << std::endl;
-}
-void Dungeon::addPassage(Passage* p) {
-    passages.push_back(p);
-    // std::cout << "Dungeon::addPassage(Passage passage)" << std::endl;
-}
-void Dungeon::addItem(Item* i){
-    items.push_back(i);
-    // std::cout << "Dungeon::addItem(Item)" << std::endl;
-}
-void Dungeon::addPlayer(Player* pR) {
-    p = pR;
-}
-void Dungeon::addMonster(Monster *m) {
-    monsters.push_back(m);
-}
-void Dungeon::addArmor(Armor *a) {
-    armors.push_back(a);
-}
-void Dungeon::addSword(Sword *s) {
-    swords.push_back(s);
-}
-void Dungeon::addScroll(Scroll *s) {
-    scrolls.push_back(s);
-}
-void Dungeon::setWidth(int w) {
-    width = w;
-}
-void Dungeon::setGameHeight(int gH){
-    gameHeight  = gH;
-}
-void Dungeon::setTopHeight(int tH){
-    topHeight = tH;
-}
-void Dungeon:: setBottomHeight(int bH) {
-    bottomHeight = bH;
+    return *dungeonCreated;
 }
 
-std::vector<Room*> Dungeon::getRooms() {
+void Dungeon::addRoom(Room *room) {
+    rooms.push_back(room);
+}
+
+std::vector<Room *> Dungeon::getRooms() {
     return rooms;
 }
-std::vector<Creature*> Dungeon::getCreatures() {
-    return creatures;
-}
-std::vector<Passage*> Dungeon::getPassages() {
-    return passages;
-}
-std::vector<Item*> Dungeon::getItems() {
-    return items;
-}
-Player* Dungeon::getPlayer() {
-    return p;
-}
-std::vector<Monster*> Dungeon::getMonsters() {
-    return monsters;
+
+void Dungeon::addPlayer(Player *_player){
+    player = _player;
 }
 
-std::vector<Armor*> Dungeon::getArmors() {
-    return armors;
+Player* Dungeon::getPlayer(){
+    return player;
 }
-std::vector<Scroll*> Dungeon::getScrolls() {
-    return scrolls;
+
+void Dungeon::addCreatue(Monster *creature) {
+    creatures.push_back(creature);
 }
-std::vector<Sword*> Dungeon::getSwords() {
-    return swords;
+
+std::vector<Monster *> Dungeon::getCreatures() {
+    return creatures;
 }
-int Dungeon::getWidth() {
+
+void Dungeon::addPassage(Passage *passage) {
+    passages.push_back(passage);
+}
+std::vector<Passage *> Dungeon::getPassages() {
+    return passages;
+}
+
+void Dungeon::addItem(Item *item) {
+    items.push_back(item);
+}
+
+std::vector<Item *> Dungeon::getItems() {
+    return items;
+}
+
+void Dungeon::setwidth(int _width){
+    width = _width;
+}
+
+int Dungeon::getwidth(){
     return width;
 }
-int Dungeon::getGameHeight() {
-    return gameHeight;
+
+void Dungeon::setTopHeight(int _topHeight){
+    topHeight = _topHeight;
 }
+
 int Dungeon::getTopHeight(){
     return topHeight;
 }
+
+void Dungeon::setGameHeight(int _gameHeight){
+    gameHeight = _gameHeight;
+}
+
+int Dungeon::getGameHeight(){
+    return gameHeight;
+}
+
+void Dungeon::setBottomHeight(int _bottomHeight){
+    bottomHeight = _bottomHeight;
+}
+
 int Dungeon::getBottomHeight(){
     return bottomHeight;
 }
-bool Dungeon::checkMove(int x, int y) {
-    std::vector<Room*> roomsVec = this -> getRooms();
-    std::vector<Passage*> passageVec = this -> getPassages();
-    std::vector<Monster*> monstersVec = this -> getMonsters();
-    for (Room* r: roomsVec){
-        if (r -> checkMove(x, y)) {
-            return true;
+
+bool Dungeon::checkMove(int x, int y){
+    std::vector<Room *> roomVector = this->getRooms();
+    std::vector<Monster *> creatureVector = this->getCreatures();
+    std::vector<Item *> itemVector = this->getItems();
+    std::vector<Passage *> passageVector = this->getPassages();
+    bool pass = false;
+
+    for (Room* room : roomVector) {
+        pass = room->checkMove(x, y);
+        if (pass == true){
+            break;
         }
     }
-    for (Passage* p: passageVec) {
-        if (p -> checkMove(x, y)) {
-            return true;
+    
+    for(Passage* passage: passageVector){
+        pass = passage->checkMove(x,y);
+        if (pass == true){
+            break;
         }
-    }
-    return false;
+    }    
+    return pass;
 }
 
 bool Dungeon::checkCollision(int x, int y){
     ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
-    std::vector<Monster*> creatureVector = this->getMonsters();
+    Player *player = this->getPlayer();
+    std::vector<Monster *> creatureVector = this->getCreatures();
     bool pass = false;
-    for (Monster* creature: creatureVector) {
+    for(Monster* creature: creatureVector){
         pass = creature->checkCollision(x, y);
         //there is a monster in the position of the player (or the position that they want to move to??)
         if (pass == true){
-            int hit = creature->getMaxhit();
+            int hit = creature->getMaxHit();
             grid->writeLine(11, "      " + creature->getName() + " did " + std::to_string(hit) + " damage!");
-            // grid->writeLine(4, "Creature HP: " + std::to_string(creature->getHp()));
-            // grid->writeLine(5, "Creature Hit: " + std::to_string(hit));
-            int healthPoints = this->getPlayer()->getHp();
-            this->getPlayer()->setHp(healthPoints-hit);
-            // grid->writeLine(8, "HP-hit: " + std::to_string(healthPoints-hit));
-            // grid->writeLine(9, "NewHP: " + std::to_string(this->getPlayer()->getHp()));
+            int playerHealth = player->getHp();
+            player->setHp(playerHealth-hit);
 
-            int phit = this->getPlayer()->getMaxhit();
-            grid->writeLine(10, "Info: " + (std::string) "Player" + " did " + std::to_string(phit) + " damage!");
-            // grid->writeLine(7, "Player Hit: " + std::to_string(phit));
-            int creatureHP = creature->getHp();
-            // grid->writeLine(6, "Creature SetHP Parameter: " + std::to_string(creatureHP-phit));
-            creature->setHp(creatureHP-phit);
-            if (creature->getHp() <= 0) {
-                grid->objGridStack[x][y].pop_back();
+            int playerhit = player->getMaxHit();
+            grid->writeLine(10, "Info: " + (std::string) "Player" + " did " + std::to_string(playerhit) + " damage!");
+            int monsterHealth = creature->getHp();
+            creature->setHp(monsterHealth - playerhit);
+            if (creature->getHp() <= 0 ){
+                grid->removeFromVector(x, y);
                 grid->writeLine(11, "      " + creature->getName() + " died.");   
             }
-            if (this->getPlayer()->getHp() <= 0) {
+            if(player->getHp() <= 0){
                 grid->writeLine(11, "      " + creature->getName() + " killed you!");
             }
-            break;
+            return pass;
         }
     }
     return pass;
-    //go through the creature list
-    //see if they are at the position 5,4 or whatever
-    //pass in player as parameter
-    //check collisions functions
 }
 
 bool Dungeon::addItemToPack(int x, int y){
     ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    Player *player = this->getPlayer();
     std::vector<Item *> itemVector = this->getItems();
     bool pass = false;
     for(Item* item: itemVector){
-        int itemX = item->getPosX();
-        int itemY = item->getPosY();
-
+        int itemX = item->getXPos();
+        int itemY = item->getYPos();
+        
         if(x == itemX && y == itemY){
-            p->addItemToPack(item);
-            grid->objGridStack[x][y].pop_back();
+            player->addItemToPack(item);
+            grid->gridStack[x][y].pop_back();
             return true;
         }
     }
     return pass;
 }
 
-bool Dungeon::removeItemToPack(int x, int y){
+bool Dungeon::dropItemFromPack(int itemNum){
     ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
-    std::vector<Item *> itemVector = this->getItems();
-    if (!(grid->objGridStack[x][y].empty())){
-        for(Item* item: itemVector){
-        int itemX = item->getPosX();
-        int itemY = item->getPosY();
+    Player *player = this->getPlayer();
+    std::vector<Item *> itemPack = player->getItemPack();
+    bool pass = false;
+    // grid->writeLine(3, std::to_string(itemNum));
 
-        if(x == itemX && y == itemY){
-            // player->removeItemFromPack(item);
-            //find the name of the item
-            //add it at the position
-            // grid->gridStack[x][y].push_back(item);
+    for(Item* item: itemPack){
+        if(item->getItemNum() == (itemNum - 49)){
+            int playerX = player->getXPos();
+            int playerY = player->getYPos();
+            std::string name = item->getName();
+            char ch = '\0';
+            if (name == "Sword"){
+                ch = ')';
+            }
+            else if(name == "Armor"){
+                ch = ']';
+            }
+            else if (name == "Scroll"){
+                ch = '?';
+            }
+            grid->gridStack[playerX][playerY].pop_back();
+            grid->gridStack[playerX][playerY].push_back(ch);
+            grid->gridStack[playerX][playerY].push_back('@');
+            player->removeItemFromPack(itemNum - 48); //remove item from the player pack
+            int counter = 0;
+            for(Item* item: itemPack){
+                item->setItemNum(counter);
+                counter++;
+            }
             return true;
         }
     }
-        //find the correct item from the pack
-        //remove item from player stack
-    }
-
-    bool pass = false;
-    // for(Item* item: itemVector){
-    //     int itemX = item->getXPos();
-    //     int itemY = item->getYPos();
-
-    //     if(x == itemX && y == itemY){
-    //         player->addItemToPack(item);
-    //         grid->gridStack[x][y].pop_back();
-    //         return true;
-    //     }
-    // }
     return pass;
 }
 
-
-void Dungeon::draw() {
-    std::vector<Room*> roomsVec = this -> getRooms();
-    std::vector<Creature*> creaturesVec = this -> getCreatures();
-    std::vector<Monster*> monstersVec = this -> getMonsters();
-    std::vector<Passage*> passagesVec = this -> getPassages();
-    // std::vector<Item*> itemsVec = d -> getItems();
-    std::vector<Armor*> armorsVec = this -> getArmors();
-    std::vector<Scroll*> scrollsVec = this -> getScrolls();
-    std::vector<Sword*> swordsVec = this -> getSwords();
-
-    for (Room* r: roomsVec) {
-        r -> draw();
+void Dungeon::displayItemsInPack(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    Player *player = this->getPlayer();
+    std::vector<Item *> itemPack = player->getItemPack();
+    int counter = 1;
+    std::string itemString;
+    for (Item* item: itemPack){
+        itemString += std::to_string(counter) + ":" + item->getName() + "   ";
+        item->setItemNum(counter - 1);
+        counter++;
     }
-    for (Passage* p: passagesVec) {
-        p -> draw();
-    }
-    Player *playuh = this -> getPlayer();
-    playuh -> draw();
-    for (Creature* c: creaturesVec){
-        c -> draw();
-    }
-    for (Monster*m : monstersVec) {
-        m -> draw();
-    }
-    // for (Item* i: itemsVec) {
-    //     i -> draw();
-    // }
-    for (Armor* a: armorsVec) {
-        a -> draw();
-    }
-    for (Scroll* s: scrollsVec) {
-        s -> draw();
-    }
-    for (Sword* s: swordsVec) {
-        s -> draw();
-    }
+    grid->writeLine(1, " ");
+    grid->writeLine(3, " ");
+    grid->writeLine(4, " ");
+    grid->writeLine(6, " ");
+    grid->writeLine(7, " ");
+    grid->writeLine(8, "Pack: " + itemString);
+    grid->writeLine(9, " ");
+    grid->writeLine(10, "Info: ");
 }
 
-// void Dungeon::drawRoom(std::vector<Room*> r) {
-//     for (auto x: r) {
-//         int w = x -> getWidth();
-//         int h = x -> getHeight();
-//         int xPos = x -> getPosX();
-//         int yPos = x -> getPosY();
-//         // std::vector<Creature*> cVector = x->getCreature(); // uses Room to get creature Vector
-//         // std::vector<Creature*> cVector = d->getCreatures(); // uses Creature to get crature Vector
-//         //for (int step = 1; (isRunning && step < w / 2); step *= 2) {
-//             // grid -> writeLine(1, "Step " + std::to_string(step));
-//             for (int i = 0; i < w; i++) {
-//                 for (int j = 0; j < h; j++) {
-//                     char c;
-//                     if (i == 0 || i == (w-1) || j == 0 || j == (h-1)) {
-//                         c = 'X';
-//                     }
-//                     else {
-//                         c = ' ';
-//                     }
-//                     grid->addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
-//                 }
-//             }
-//             // update the grid
-//             grid->update();
-//             // wait a bit to rejoin
-//             // wait in a few steps to update faster on keypress
-//             for (int i = 0; (isRunning && i < 5); i++) {
-//                 std::this_thread::sleep_for(std::chrono::milliseconds(400));
-//             }
-//         //}
-//     }
-// }
+bool Dungeon::checkArmor(){
+    Player *player = this->getPlayer();
+    if(player->getArmor()){
+        Item* armor = player->getArmor();
+        player->addItemToPack(armor);
+        player->setArmor(NULL);
+        return true;
+    }
+
+    return false;
+}
+
+bool Dungeon::checkArmorInPack(int armorNum){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    Player *player = this->getPlayer();
+    std::vector<Item *> itemPack = player->getItemPack();
+    bool pass = false;
+
+    for(Item* item: itemPack){
+        if(item->getItemNum() == (armorNum - 49)){
+            player->setArmor(item);
+            return true;
+        }
+    }
+    return pass;
+
+}
+void Dungeon::Draw() {
+    std::vector<Room *> roomVector = this->getRooms();
+    std::vector<Monster *> creatureVector = this->getCreatures();
+    std::vector<Item *> itemVector = this->getItems();
+    std::vector<Passage *> passageVector = this->getPassages();
+    
+    for (Room* room : roomVector) {
+        room->Draw();
+    }
+
+    for(Item* item: itemVector){
+        item->Draw();
+    }
+    
+    for(Passage* passage: passageVector){
+        passage->Draw();
+    }
+
+    for(Monster* creature: creatureVector){
+        creature->Draw();
+    }
+    Player *player = this->getPlayer();
+    player->Draw();
+}

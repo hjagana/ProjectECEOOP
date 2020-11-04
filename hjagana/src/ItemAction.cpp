@@ -1,7 +1,8 @@
 #include "ItemAction.hpp"
+
+#include <string>
 #include <iostream>
 
-ItemAction::ItemAction(Creature* _owner) {
-    // Creature* owner = _owner;
-    // std::cout << "ItemAction::ItemAction(Creature _owner)" << std::endl;
+ItemAction::ItemAction(Creature *owner){
+    // std::cout <<"ItemAction:" << std::endl;
 }

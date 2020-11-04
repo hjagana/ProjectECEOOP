@@ -1,7 +1,8 @@
 #include "BlessCurseOwner.hpp"
+
+#include <string>
 #include <iostream>
 
-BlessCurseOwner::BlessCurseOwner(Creature* _owner):ItemAction(_owner) {
-    // Creature owner = _owner;
-    // std::cout << "BlessCurseOwner::BlessCurseOwner(Creature _owner):ItemAction(_owner)" << std::endl;
+BlessCurseOwner::BlessCurseOwner(Creature *owner) : ItemAction(owner){
+    // std::cout <<"BlessCurseOwner:" << std::endl;
 }

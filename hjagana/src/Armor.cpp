@@ -1,28 +1,28 @@
 #include "Armor.hpp"
+
+#include <string>
 #include <iostream>
 
-Armor::Armor(std::string name) {
-    // std::cout << "Armor::Armor(std::string name)" << std::endl;
+Armor::Armor(std::string name){
 }
 
-void Armor::setName(std::string n) {
-    armorName = n;
-    // std::cout << "Armor::setName(std::string n)" << std::endl;  
+void Armor::setName(std::string _itemName){
+    itemName = _itemName;
 }
 
-void Armor::setID(int room, int serial) {
-    // std::cout << "Armor::setID(int room, int serial)" << std::endl;
+std::string Armor::getName(){
+    return itemName;
 }
 
-std::string Armor::getName() {
-    return armorName;
+void Armor::setId(int room, int serial){
 }
 
-void Armor::draw() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int xPos = this -> getPosX();
-    int yPos = this -> getPosY();
+void Armor::Draw(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int x = this->getXPos();
+    int y = this->getYPos();
     char c = ']';
-    grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
-    grid -> update();
+    grid->addObjectToDisplay(new GridChar(c), x, y);
+
+    grid->update();
 }

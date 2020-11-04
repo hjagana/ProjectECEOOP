@@ -1,13 +1,18 @@
 #ifndef ITEMACTION_H_
 #define ITEMACTION_H_
 
+#include <string>
+#include <vector>
+
+// #include "Creature.hpp"
 #include "Action.hpp"
-#include "Creature.hpp"
 
 class Creature;
-class ItemAction : public Action {
+class ItemAction: public Action{
+    private:
+
     public:
-        ItemAction(Creature* owner);
+        ItemAction(Creature *owner);
 };
 
-#endif
+#endif /* ITEMACTION_H_ */

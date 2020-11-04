@@ -1,95 +1,118 @@
 #include "Passage.hpp"
+
+#include <string>
 #include <iostream>
 
-Passage::Passage() {
-    // std::cout << "Passage::Passage()" << std::endl; 
+
+Passage::Passage(){
 }
 
-void Passage::setName(std::string n) {
-    // std::cout << "Passage::setName(std::string n)" << std::endl;
-}
-void Passage::setID(int room1, int room2) {
-    // std::cout << "Passage::setID(int room1, int room2)" << std::endl;
+void Passage::setName(std::string name) {
 }
 
-void Passage::addPassage (Passage *  passage) {
-        passageVector[passageCount++] = passage;
-
-}
-void Passage::freePassage(){
-
-    for(std::vector<Passage *>::iterator passage = passageVector.begin(); passage != passageVector.end(); ++passage) { 
-        delete *passage; 
-    }
-    passageVector.clear();
+void Passage::setId(int room1, int room2){
 }
 
-void Passage::setPosX(int _x) {
-    xVec.push_back(_x);
+void Passage::setXPos(int x){
+    xx.push_back(x);
 }
-void Passage::setPosY(int _y) {
-    yVec.push_back(_y);
+
+void Passage::setYPos(int y){
+    yy.push_back(y);
 }
-bool Passage::checkMove(int x, int y) {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    if (!grid->objGridStack[x][y].empty()) {
-        GridChar ch = grid->objGridStack[x][y].back();
-        if (ch.getChar() == '#' || ch.getChar() == '+' || ch.getChar() == '.') {
-            return true;
+
+bool Passage::checkMove(int x, int y){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    if (!(grid->gridStack[x][y].empty())){
+        GridChar ch = grid->gridStack[x][y].back();
+        bool pass = false;
+        if(ch.getChar() == '#' || ch.getChar() == '+' || ch.getChar() == '.'){
+            return pass = true;
         }
+        return pass;
     }
+
     return false;
+    // int width = this->getWidth();
+    // int height = this->getHeight();
+    // //check grid stack to see if there is a pound sign in the stack 
+    // bool pass = true;
+    // for (int i = 0; i < width; i ++){
+    //     for(int j = 0; j < height; j++){
+    //         if(x == 0 || (x == width - 1) || (y == 0) || (x == height - 1)){
+    //             pass = false;
+    //         }
+    //     }
+    // }
+    // return pass;
 }
 
-void Passage::draw() {
-    char c;
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    // grid -> writeLine(1, std::to_string(xVec.size()) + " ");
-    // grid -> writeLine(2, std::to_string(yVec.size()));
+void Passage::Draw(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    // grid->writeLine(1, std::to_string(xx.size()));
+    // grid->writeLine(2, std::to_string(yy.size()));
 
-    for (int i = 1; i < xVec.size(); i++) {
-        int x1 = xVec[i - 1];
-        int y1 = yVec[i - 1];
-        int x2 = xVec[i];
-        int y2 = yVec[i];
+    for (int i = 1; i < xx.size(); i++){
+        int x = xx[i -1];
+        int y = yy[i - 1];
+        int x1 = xx[i];
+        int y1 = yy[i];
 
-        if (x1 != x2) {
-            int xSmall = 0;
-            int xBig = 0;
-            if (x1 < x2) {
-                xSmall = x1;
-                xBig = x2;
-            } else {
-                xBig = x1;
-                xSmall = x2;
+        if (x1 != x){
+            int xsmall = 0;
+            int xbig = 0;
+            if (x - x1 > 0){
+                xsmall = x1;
+                xbig = x;
             }
-            for (int b = xSmall; b <= xBig; b++) {
-                c = '#';
-                grid -> addObjectToDisplay(new GridChar(c), b, y1);
+            else if (x - x1 < 0){
+                xsmall = x;
+                xbig = x1;
             }
-        } else if (y1 != y2) {
-            int ySmall = 0;
-            int yBig = 0;
-            if (y1 < y2) {
-                ySmall = y1;
-                yBig = y2;
-            } else {
-                yBig = y1;
-                ySmall = y2;
-            }
-            for (int b = ySmall; b <= yBig; b++) {
-                c = '#';
-                grid -> addObjectToDisplay(new GridChar(c), x1, b);
+            for (int first = xsmall; first <= xbig; first++){
+                char c = '#';
+                grid->addObjectToDisplay(new GridChar(c), first, y);
             }
         }
-        grid -> update();
+        else if (y1 != y){
+            int ysmall = 0;
+            int ybig = 0;
+            if (y - y1 > 0){
+                ysmall = y1;
+                ybig = y;
+            }
+            else if (y - y1 < 0){
+                ysmall = y;
+                ybig = y1;
+            }
+            for (int first = ysmall; first <= ybig; first++){
+                char c = '#';
+                grid->addObjectToDisplay(new GridChar(c), x, first);
+            }
+        }
     }
+
+    int x1 = xx[0];
+    int y1 = yy[0];
+    char c = '+';
+    grid->addObjectToDisplay(new GridChar(c), x1, y1);
+    int xLast = xx[xx.size() - 1];
+    int yLast = yy[yy.size() - 1];
     c = '+';
-    int c1 = xVec[0];
-    int c2 = yVec[0];
-    grid -> addObjectToDisplay(new GridChar(c), c1, c2);
-    int c3 = xVec[xVec.size()-1];
-    int c4 = yVec[yVec.size()-1];
-    grid -> addObjectToDisplay(new GridChar(c), c3, c4);
-    grid -> update();
+    grid->addObjectToDisplay(new GridChar(c), xLast, yLast);
+
+    grid->update();
+
+    // // object display grid contains all the displayable things and their positions
+    // // interface between displayable objects and terminal
+    // //keeps track of where things are
+    // //
+    // //room should have a list of displayables
+    // //dungeon goes through list of rooms and passages
+    //     //they should draw themselves
+    //     //draw function should then iterate through creature vector and item vector and call draw on those
+    //     //check character so you can't walk through walls
+    
+    // //push the thing to the position that it is at
+    // //then add object should reflect it to ncurses
 }

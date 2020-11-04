@@ -1,21 +1,24 @@
 #ifndef CREATURE_H_
 #define CREATURE_H_
 
+#include <string>
+#include <vector>
+
 #include "Displayable.hpp"
 #include "CreatureAction.hpp"
 #include "ObjectDisplayGrid.hpp"
 
-class CreatureAction;
-class Creature: public Displayable {
+class Creature: public Displayable{
+    private:
+    // ObjectDisplayGrid * grid;
+
     public:
         Creature();
-        // virtual void setHp(int h);
-        void setHpMoves(int hpm);
-        void setDeathAction(CreatureAction da);
-        void setHitAction(CreatureAction ha);
-        void draw();
-    private:
-        // int hitpoints;
+        virtual void setHpMoves(int hpm);
+        virtual void setDeathAction(CreatureAction *da);
+        virtual void setHitAction(int ha);
+        
+        virtual void Draw();
 };
 
-#endif
+#endif /* STRUCTURE_H_ */

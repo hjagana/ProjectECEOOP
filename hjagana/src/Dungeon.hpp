@@ -3,71 +3,70 @@
 
 #include <string>
 #include <vector>
+
 #include "Room.hpp"
-#include "Creature.hpp"
+#include "Monster.hpp"
 #include "Item.hpp"
 #include "Passage.hpp"
-#include "ObjectDisplayGrid.hpp"
 #include "Player.hpp"
-#include "Monster.hpp"
-#include "Armor.hpp"
-#include "Sword.hpp"
-#include "Scroll.hpp"
+// #include "ObjectDisplayGrid.hpp"
 
-class Dungeon {
-    public:
-        static Dungeon* getDungeon(std::string name, int width, int gameHeight);
-        std::vector<Room*> getRooms();
-        std::vector<Creature*> getCreatures();
-        std::vector<Passage*> getPassages();
-        std::vector<Item*> getItems();
-        Player* getPlayer();
-        std::vector<Monster*> getMonsters();
-        std::vector<Armor*> getArmors();
-        std::vector<Scroll*> getScrolls();
-        std::vector<Sword*> getSwords();
-        void setWidth(int w);
-        void setGameHeight(int gH);
-        void setTopHeight(int tH);
-        void setBottomHeight(int bH);
-        int getWidth();
-        int getGameHeight();
-        int getTopHeight();
-        int getBottomHeight();
-        void draw();
-        void addRoom(Room* r);
-        void addCreature(Creature* c);
-        void addPassage(Passage* p);
-        void addItem(Item* i);
-        void addPlayer(Player* p);
-        void addMonster(Monster *m);
-        void addArmor(Armor *a);
-        void addSword(Sword *s);
-        void addScroll(Scroll *s);
-        bool checkMove(int x, int y);
-        bool checkCollision(int x, int y);
-        bool addItemToPack(int x, int y);
-        bool removeItemToPack(int x, int y);
-        std::vector<Dungeon*> dungeon;
-        std::vector<Room*> rooms;
-        std::vector<Creature*> creatures;
-        std::vector<Passage*> passages;
-        std::vector<Item*> items;
-        std::vector<Monster*> monsters;
-        std::vector<Armor*> armors;
-        std::vector<Scroll*> scrolls;
-        std::vector<Sword*> swords;
-        Player* p;
-        // int roomCount = 0;
-        // int creatureCount = 0;
-        // int passageCount = 0;
-        // int itemCount = 0;
-        static Dungeon* dungeonR;
-        int width;
-        int gameHeight;
-        int topHeight;
-        int bottomHeight;
+class Dungeon{
     private:
-}; 
+    static Dungeon * dungeonCreated;
+    // int roomCount = 0;
+    std::vector<Room * > rooms; 
+    // int creatureCount = 0;
+    std::vector<Monster * > creatures; 
+    // int passageCount = 0;
+    std::vector<Passage * > passages; 
+    // int itemCount = 0;
+    std::vector<Item * > items; 
 
-#endif
+    Player *player;
+
+    int width;
+    int topHeight;
+    int gameHeight;
+    int bottomHeight;
+
+
+    public:
+        Dungeon(); 
+        virtual void addRoom(Room *room);
+        virtual void addCreatue(Monster *creature);
+        virtual void addPassage(Passage *passage);
+        virtual void addPlayer(Player *_player);
+        virtual void addItem(Item *item);
+
+        static Dungeon& getDungeon(std::string name, int width, int gameHeight);
+        virtual std::vector<Room *> getRooms();
+        virtual std::vector<Monster *> getCreatures();
+        virtual std::vector<Passage *> getPassages();
+        virtual std::vector<Item *> getItems();
+        virtual Player* getPlayer();
+
+        virtual void Draw();
+
+        virtual void setwidth(int _width);
+        virtual int getwidth();
+        virtual void setTopHeight(int _topheight);
+        virtual int getTopHeight();
+        virtual void setGameHeight(int _gameHeight);
+        virtual int getGameHeight();
+        virtual void setBottomHeight(int _bottomHeight);
+        virtual int getBottomHeight();
+
+        virtual bool checkMove(int x, int y);
+        virtual bool checkCollision(int x, int y);
+        virtual bool addItemToPack(int x, int y);
+        virtual bool dropItemFromPack(int itemNum);
+
+        virtual void displayItemsInPack();
+
+        virtual bool checkArmor();
+        virtual bool checkArmorInPack(int armorNum);
+
+};
+
+#endif /* DUNGEON_H_ */

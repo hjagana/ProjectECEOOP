@@ -1,15 +1,21 @@
 #ifndef SWORD_H_
 #define SWORD_H_
 
-#include "Item.hpp"
 #include <string>
+#include <vector>
 
-class Sword: public Item {
+#include "Item.hpp"
+
+class Sword: public Item{
+    private:
+    std::string itemName;
+
     public:
         Sword(std::string name);
-        void setID(int room, int serial);
-        virtual void draw();
-    private:
+        virtual void setName(std::string _itemName);
+        virtual std::string getName();
+        virtual void setId(int room, int serial);
+        virtual void Draw();
 };
 
-#endif
+#endif /* SWORD_H_ */

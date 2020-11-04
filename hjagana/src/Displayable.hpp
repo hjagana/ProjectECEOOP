@@ -1,46 +1,62 @@
 #ifndef DISPLAYABLE_H_
 #define DISPLAYABLE_H_
 
-#include <iostream>
-#include <algorithm>
 #include <string>
 #include <vector>
-#include "GridChar.h"
+
+// #include "ObjectDisplayGrid.hpp"
+#include "GridChar.hpp"
 
 // class ObjectDisplayGrid;
-class Displayable {
-    public:
-        Displayable();
-        //void draw();
-        void setInvisible();
-        void setVisible();
-        void setMaxhit(int maxHit);
-        void setHpMove(int hpMoves);
-        void setHp(int Hp);
-        void setType(char t);
-        void setIntValue(int v);
-        virtual void setPosX(int x);
-        virtual void setPosY(int y);
-        void setWidth(int x);
-        void setHeight(int y);
-        void addDisplay(Displayable * display);
-        void freeDisplayables();
-        int getPosX();
-        int getPosY();
-        int getHeight();
-        int getWidth();
-        int getHp();
-        int getMaxhit();
-        GridChar*** objectGrid;
+class Displayable{
     private:
-        std::vector<Displayable *> displayableVector;
-        int displayCount = 0;
-        int posX; // position x
-        int posY; // position y
-        int w; // width
-        int h; // height
-        int maxHit;
-        int hitPoints;
-        int hpMoveVal;
+    // std::vector< Displayable * > displayable; 
+    // int displayCount = 0;
+    int width;
+    int height;
+    int xpos;
+    int ypos;
+    bool visible = false;
+    int maxHit;
+    int hitPoints;
+    int itemNum;
+    // ObjectDisplayGrid *grid;
+    // friend class ObjectDisplayGrid;
+    
+
+    public:
+        // ObjectDisplayGrid *grid;
+        Displayable();
+        virtual void setInvisible();
+        virtual void setVisible();
+        virtual bool getVisible();
+        virtual bool getInvisible();
+        virtual void setMaxHit(int _maxHit);
+        virtual int getMaxHit();
+        virtual void setHpMove(int hpMoves);
+        virtual std::string getName();
+        virtual void setItemNum(int _itemNum);
+        virtual int getItemNum();
+        // virtual int getHpMove();
+        virtual void setHp(int Hp);
+        virtual int getHp();
+        virtual void setType(char t);
+        virtual void setIntValue(int v);
+        virtual void setXPos(int x);
+        virtual void setYPos(int y);
+        virtual void setWidht(int x);
+        virtual void setHeight(int y);
+
+        virtual int getWidth();
+        virtual int getHeight();
+        virtual int getXPos();
+        virtual int getYPos();
+        virtual void Draw();
+        // virtual void update();
+        // virtual void addObjectToDisplay(GridChar* ch, int x, int y);
+        // virtual void writeLine(int line, std::string message);
+
+        // void addDisplay(Displayable * display);
 };
-#endif
+
+#endif /* DISPLAYABLE_H_ */

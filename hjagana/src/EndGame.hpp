@@ -1,12 +1,17 @@
 #ifndef ENDGAME_H_
 #define ENDGAME_H_
 
-#include "CreatureAction.hpp"
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class EndGame : public CreatureAction {
-    EndGame(std::string _name, Creature* _owner);
+#include "CreatureAction.hpp"
+
+class Creature;
+class EndGame: public CreatureAction{
+    private:
+
+    public:
+        EndGame(std::string name, Creature *owner);
 };
 
-#endif
+#endif /* ENDGAME_H_ */

@@ -1,76 +1,74 @@
 #include "Room.hpp"
-#include <iostream>
+
 #include <string>
+#include <iostream>
 
-Room::Room(std::string r) {
-    // std::cout << "Room::Room(std::string r)" << std::endl;
+Room::Room(std::string room){
 }
+
 void Room::setId(int room) {
-    // std::cout << "Room::setId(int room)" << std::endl;
-}
-void Room::setCreature(Creature* Monster) {
-    // std::cout << "Room::setCreature(Creature Monster)" << std::endl;
+    roomId = room;
 }
 
-// std::vector<Creature*> Room::getCreature() {
-//     return creatureVector;
-// }
-
-void Room::addRoom (Room * room) {
-        roomVector[roomCount++] = room;
-
-}
-void Room::freeRoom(){
-
-    for(std::vector<Room *>::iterator room = roomVector.begin(); room != roomVector.end(); ++room) { 
-        delete *room; 
-    }
-    roomVector.clear();
+int Room::getId(){
+    return roomId;
 }
 
-bool Room::checkMove(int x, int y) {
+void Room::setCreature(Creature *Monster){
+    creature = Monster;
+}
+
+Creature* Room::getCreature(){
+    return creature;
+}
+
+bool Room::checkMove(int x, int y){
     ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
-    int offX = this->getPosX();
-    int offY = this->getPosY();
-    int w = this -> getWidth();
-    int h = this -> getHeight();
-    if (x > (offX) && x < w+offX && y > (offY) && y < (h+offY)) {
-        for (int i = offX; i < w + offX; i++) {
-            for (int j = offY; j < h + offY; j++) {
-                GridChar ch = grid->objGridStack[x][y].back();
+    int width = this->getWidth();
+    int height = this->getHeight();
+    int offsetx = this->getXPos();
+    int offsety = this->getYPos();
+    bool pass = false;
+    //determine what room they are in
+    if (x > offsetx && x < offsetx + width && y > offsety && y < offsety + height){
+        for (int i = offsetx; i < (width + offsetx); i ++){
+            for(int j = offsety; j < (height + offsety); j++){
+                GridChar ch = grid->gridStack[x][y].back();
                 if(ch.getChar() == 'T' || ch.getChar() == 'H' || ch.getChar() == 'S'){
                     //don't move if there is a creature there
                     return false;
                 }
-                if (x == (offX) || x == (w+offX-1) || y == (offY) || y == (h+offY-1)) {
+                if(x == offsetx || (x == width - 1 + offsetx) || (y == offsety) || (y == height - 1 + offsety)){
+                    //this would be on the border of a room
                     return false;
-                } else {
-                    return true;
+                }
+                else{
+                    pass = true;
                 }
             }
         }
     }
-    return false;
+    return pass;
 }
 
-void Room::draw() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int w = this -> getWidth();
-    int h = this -> getHeight();
-    int xPos = this -> getPosX();
-    int yPos = this -> getPosY();
-    for (int i = 0; i < w; i++) {
-        for (int j = 0; j < h; j++) {
+void Room::Draw(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int width = this->getWidth();
+    int height = this->getHeight();
+    int offsetx = this->getXPos();
+    int offsetY = this->getYPos();
+
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
             char c;
-            if (i == 0 || i == (w - 1) || j == 0 || j == (h - 1)) {
+            if(i == 0 || (i == width - 1) || j == 0 || (j == height - 1)){
                 c = 'X';
             }
-            else {
+            else{
                 c = '.';
             }
-            grid -> addObjectToDisplay(new GridChar(c), i + xPos, j + yPos);
+            grid->addObjectToDisplay(new GridChar(c), i + offsetx, j + offsetY);
         }
     }
-    grid -> update();
+    grid->update();
 }
-

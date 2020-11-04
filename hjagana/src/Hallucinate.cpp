@@ -1,7 +1,8 @@
 #include "Hallucinate.hpp"
+
+#include <string>
 #include <iostream>
 
-Hallucinate::Hallucinate(Creature* _owner):ItemAction(_owner) {
-    // Creature* owner = _owner;
-    // std::cout << "Hallucinate::Hallucinate(Creature _owner):ItemAction(_owner)" << std::endl;
+Hallucinate::Hallucinate(Creature* owner) : ItemAction(owner){
+    // std::cout <<"Hallucinate:" << std::endl;
 }

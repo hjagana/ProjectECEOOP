@@ -1,19 +1,29 @@
 #include "Sword.hpp"
+
+#include <string>
 #include <iostream>
 
-Sword::Sword(std::string name) {
-    // std::cout << "Sword::Sword(std::stirng name)" << std::endl;
+Sword::Sword(std::string name){
 }
 
-void Sword::setID(int room, int serial) {
-    // std::cout << "Sword::setID(int room, int serial)" << std::endl;
+void Sword::setId(int room, int serial){
 }
 
-void Sword::draw() {
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    int xPos = this -> getPosX();
-    int yPos = this -> getPosY();
+void Sword::setName(std::string _itemName){
+    itemName = _itemName;
+}
+
+std::string Sword::getName(){
+    return itemName;
+}
+
+void Sword::Draw(){
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+    int x = this->getXPos();
+    int y = this->getYPos();
+
     char c = ')';
-    grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
-    grid -> update();
+    grid->addObjectToDisplay(new GridChar(c), x, y);
+
+    grid->update();
 }

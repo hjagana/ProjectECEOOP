@@ -1,12 +1,17 @@
 #ifndef TELEPORT_H_
 #define TELEPORT_H_
 
-#include "CreatureAction.hpp"
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class Teleport : public CreatureAction {
-    Teleport(std::string _name, Creature* _owner);
+#include "CreatureAction.hpp"
+
+class Creature;
+class Teleport: public CreatureAction{
+    private:
+
+    public:
+        Teleport(std::string name, Creature *owner);
 };
 
-#endif
+#endif /* TELEPORT_H_ */

@@ -1,12 +1,17 @@
 #ifndef REMOVE_H_
 #define REMOVE_H_
 
-#include "CreatureAction.hpp"
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class Remove : public CreatureAction {
-    Remove(std::string _name, Creature* _owner);
+#include "CreatureAction.hpp"
+
+class Creature;
+class Remove: public CreatureAction{
+    private:
+
+    public:
+        Remove(std::string name, Creature *owner);
 };
 
-#endif
+#endif /* REMOVE_H_ */

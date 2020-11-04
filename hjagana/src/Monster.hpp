@@ -1,19 +1,23 @@
 #ifndef MONSTER_H_
 #define MONSTER_H_
 
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class Monster: public Creature {
+#include "Creature.hpp"
+#include "ObjectDisplayGrid.hpp"
+
+class Monster: public Creature{
+    private:
+    std::string nameId;
+
     public:
         Monster();
-        void setName(std::string n);
-        void setID(int room, int serial);
-        void draw();
-        std::string getName();
-        std::string name;
-        bool checkCollision(int x, int y);
-    private:
+        virtual void setName(std::string name);
+        virtual void setId(int room, int serial);   
+        virtual std::string getName();  
+        virtual void Draw();  
+        virtual bool checkCollision(int x, int y);
 };
 
-#endif
+#endif /* MONSTER_H_ */

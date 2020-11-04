@@ -1,77 +1,54 @@
 #ifndef OBJECTDISPLAYGRID_H_
 #define OBJECTDISPLAYGRID_H_
-#include "GridChar.h"
-//#include "Dungeon.hpp"
-// #include "Displayable.hpp"
-#include "Structure.hpp"
-#include "Creature.hpp"
-// #include "Room.hpp"
-// #include "Passage.hpp"
-#include <iostream>
-#include "curses.h"
-#include <typeinfo>
 
-// static GridChar*** objectGrid;
-// static std::vector<Displayable>** objGridStack;
+#include <string>
+#include <vector>
+#include "GridChar.hpp"
+#include "Displayable.hpp"
 
-class ObjectDisplayGrid {
+class ObjectDisplayGrid{
+    private:
+    int height, width;
+    int messages;
+    int topMessageHeight;
+    // Dungeon * dungeonGrid;
+    // ObjectDisplayGrid *grid;
+    // static GridChar*** objectGrid;
+    // Displayable *display;
+
+
+    // GridChar*** objectGrid;
+    
+    
+    // std::vector <Displayable > ** gridStack; //displayable would add to get a character
+    //2 D array of vectors
+    
+    // int displayCount = 0;
+    // std::vector<ObjectDisplayGrid * > displays; 
+
     public:
-        int getObjectDisplayGrid(int gameHeight, int width, int topHeight);
-        void setTopMessageHeight(int topHeight);
-        /**
-         * Creates a new display grid using the given parameters and initializes ncurses.
-         * Screen height will be grid height + messages
-         * @param width     Screen width
-         * @param height    Grid height
-         * @param messages  Number of lines to reserve in the message area
-         */
-        std::vector<GridChar>** objGridStack;
+        
+        // ObjectDisplayGrid(); 
+        std::vector <GridChar > ** gridStack; //displayable
         static ObjectDisplayGrid* objGrid;
-        ObjectDisplayGrid(int width, int height, int messages);
-        static ObjectDisplayGrid* getGrid(int w, int h, int m);
+        static ObjectDisplayGrid* getGrid(int _width, int _height, int _messages);
         static ObjectDisplayGrid* getGrid();
-        /** Object deconstructor, to delete the grid character matrix and free ncurses data */
+        ObjectDisplayGrid(int _width, int _height, int _messages);
+        // ObjectDisplayGrid(int width, int height, int messages);
         virtual ~ObjectDisplayGrid();
-        void removeFromVector(int x, int y) ;
-        std::vector<GridChar>** getGridStack();
-        int topHeightMessage;
-        /**
-         * Refreshes the grid display
-         */
-        // virtual void update();
         virtual void update();
-        /**
-         * Adds an object to the display grid
-         * @param ch  Object to display
-         * @param x   X position
-         * @param y   Y position
-         */
-        // virtual void addObjectToDisplay(GridChar* ch, int x, int y);
         virtual void addObjectToDisplay(GridChar* ch, int x, int y);
-        /**
-         * Writes a line of text to the screen at the given line relative to the bottom
-         * @param line    line number
-         * @param message message to write
-         * @param update  If true, immediately updates the screen
-         */
         virtual void writeLine(int line, std::string message);
         virtual void writeTopLine(int line, std::string message);
-        // void runDisplay(ObjectDisplayGrid* g, Dungeon* d);
-        
-        
+        // virtual void writeBotLine(int line, std::string message);
 
-    private:
-        //std::vector<Displayable*>[height][width] objectGrid;
-        // std::vector<Displayable*>[h][w] objectGrid;
-        //std::vector<Displayable*> displayableVector;
-        /** Keeps track of the consoles width and height */
-        int height, width;
-        // int h*;
-        // int w*;
+        virtual void getObjectDisplayGrid(int gameHeight, int width, int topHeight);
+        virtual void setTopMessageHeight(int topHeight);
 
-        /** Number of lines for message writing */
-        int messages;
-        
+        virtual void removeFromVector(int x, int y);
+        // virtual void runDisplay(Dungeon *dungeonGrid); 
+        // virtual void addDisplay(ObjectDisplayGrid *  display);
+        // virtual void freeDisplays();
 };
 
-#endif
+#endif /* OBJECTDISPLAYGRID_H_ */

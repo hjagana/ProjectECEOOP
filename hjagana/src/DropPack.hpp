@@ -1,12 +1,17 @@
 #ifndef DROPPACK_H_
 #define DROPPACK_H_
 
-#include "CreatureAction.hpp"
-#include "Creature.hpp"
 #include <string>
+#include <vector>
 
-class DropPack : public CreatureAction {
-    DropPack(std::string _name, Creature* _owner);
+#include "CreatureAction.hpp"
+
+class Creature;
+class DropPack: public CreatureAction{
+    private:
+
+    public:
+        DropPack(std::string name, Creature *owner);
 };
 
-#endif
+#endif /* DROPPACK_H_ */

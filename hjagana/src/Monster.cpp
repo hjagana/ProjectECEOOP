@@ -1,57 +1,53 @@
 #include "Monster.hpp"
-#include <iostream>
+
 #include <string>
+#include <iostream>
 
 Monster::Monster(){
-    // std::cout << "Monster::Monster()" << std::endl;
-}
-void Monster::setName(std::string n) {
-    name = n;
-    // std::cout << "Monster::setName(std::string n)" << std::endl;
-}
-void Monster::setID(int room, int serial) {
-    // std::cout << "Monster::setID(int room, int serial)" << std::endl;
-}
-std::string Monster::getName() {
-    return name;
 }
 
+void Monster::setName(std::string name) {
+    nameId = name;
+}
+
+std::string Monster::getName(){
+    return nameId;
+}
+
+void Monster::setId(int room, int serial){
+}
 
 bool Monster::checkCollision(int x, int y){
-    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
-    int monsterX = this->getPosX();
-    int monsterY = this->getPosY();
+    int monsterX = this->getXPos();
+    int monsterY = this->getYPos();
 
     if(x == monsterX && y == monsterY){
-        // grid->gridStack[x][y].pop_back();
         return true;
     }
     return false;
-
 }
 
-void Monster::draw() {
-    std::string typeofMonster = this -> getName();
-    ObjectDisplayGrid* grid = ObjectDisplayGrid::getGrid();
-    if (typeofMonster.compare("Troll") == 0) {
-        int xPos = this -> getPosX();
-        int yPos = this -> getPosY();
+void Monster::Draw(){
+    std::string type = this->getName(); //type of monster
+    ObjectDisplayGrid *grid = ObjectDisplayGrid::getGrid();
+
+    if (type == "Troll"){
+        int x = this->getXPos();
+        int y = this->getYPos();
         char c = 'T';
-        grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
-        grid -> update();
-    } else if (typeofMonster.compare("Snake") == 0) {
-        int xPos = this -> getPosX();
-        int yPos = this -> getPosY();
+        grid->addObjectToDisplay(new GridChar(c), x, y);
+    }
+    else if (type == "Snake"){
+        int x = this->getXPos();
+        int y = this->getYPos();
         char c = 'S';
-        grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
-        grid -> update();
-    } else if (typeofMonster.compare("Hobgoblin") == 0) {
-        int xPos = this -> getPosX();
-        int yPos = this -> getPosY();
+        grid->addObjectToDisplay(new GridChar(c), x, y);
+    }
+    else if (type == "Hobgoblin"){
+        int x = this->getXPos();
+        int y = this->getYPos();
         char c = 'H';
-        grid -> addObjectToDisplay(new GridChar(c), xPos, yPos);
-        grid -> update();
-    } //else {
-    //     std::cout << "ERROR MONSTER TYPE NOT FOUND!" <<std::endl;
-    // }
+        grid->addObjectToDisplay(new GridChar(c), x, y);
+    }
+    grid->update();
 }

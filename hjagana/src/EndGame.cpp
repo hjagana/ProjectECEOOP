@@ -1,9 +1,8 @@
 #include "EndGame.hpp"
+
+#include <string>
 #include <iostream>
 
-
-EndGame::EndGame(std::string _name, Creature* _owner):CreatureAction(_owner) {
-    std::string name = _name;
-    // Creature* owner = _owner;
-    // std::cout << "EndGame::EndGame(std::string _name, Creature _owner):CreatureAction(_owner)" << std::endl;
+EndGame::EndGame(std::string name, Creature *owner): CreatureAction(owner){
+    // std::cout <<"EndGame:" << std::endl;
 }
